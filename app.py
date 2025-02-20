@@ -14,12 +14,14 @@ def hello_world():
 def main():
 
     try: 
+        data = request.get_json() 
+        message = data.get("text", "")
          # Initialize user variable
         user = "GenericSession"
 
         # Extract relevant information
         user = data.get("user_name", "Unknown")
-        
+
         pdf_path = 'soe-grad-handbook.pdf'
         
         # Check if PDF file is already uploaded
@@ -28,9 +30,6 @@ def main():
                 path=pdf_path,
                 session_id=user,
                 strategy='smart')
-        
-        data = request.get_json() 
-        message = data.get("text", "")
 
         print(data)
 
