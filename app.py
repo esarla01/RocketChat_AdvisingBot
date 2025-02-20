@@ -25,6 +25,9 @@ def main():
         
         data = request.get_json() 
 
+        # Initialize user variable
+        user = "Unknown"
+
         # Extract relevant information
         user = data.get("user_name", "Unknown")
         message = data.get("text", "")
