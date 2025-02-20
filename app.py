@@ -22,14 +22,14 @@ def main():
         # Extract relevant information
         user = data.get("user_name", "Unknown")
 
-        pdf_path = 'soe-grad-handbook.pdf'
+        # pdf_path = 'soe-grad-handbook.pdf'
         
-        # Check if PDF file is already uploaded
-        if not os.path.exists(pdf_path):
-            pdf_upload(
-                path=pdf_path,
-                session_id=user,
-                strategy='smart')
+        # # Check if PDF file is already uploaded
+        # if not os.path.exists(pdf_path):
+        #     pdf_upload(
+        #         path=pdf_path,
+        #         session_id=user,
+        #         strategy='smart')
 
         print(data)
 
