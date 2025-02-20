@@ -1,7 +1,8 @@
 import requests
 from flask import Flask, request, jsonify
-from llmproxy import generate
+from llmproxy import generate, pdf_upload
 from utils import generate_response
+import os
 
 app = Flask(__name__)
 
@@ -11,6 +12,15 @@ def hello_world():
 
 @app.route('/query', methods=['POST'])
 def main():
+    pdf_path = 'soe-grad-handbook.pdf'
+    
+    # Check if PDF file is already uploaded
+    if not os.path.exists(pdf_path):
+        pdf_upload(
+            path=pdf_path,
+            session_id=user,
+            strategy='smart')
+    
     data = request.get_json() 
 
     # Extract relevant information
@@ -40,4 +50,5 @@ def page_not_found(e):
     return "Not Found", 404
 
 if __name__ == "__main__":
+    
     app.run()

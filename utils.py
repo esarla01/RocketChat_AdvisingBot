@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 from readability import Document
 import re
 from urllib.parse import urljoin
-import logging
 
 googleApiKey = os.environ.get("googleSearch")
 searchEngineId = os.environ.get("googleCSEId")
