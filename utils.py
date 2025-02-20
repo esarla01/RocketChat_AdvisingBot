@@ -85,14 +85,13 @@ def fetch_full_content(url: str, timeout: int = 10) -> str:
     except Exception as e:
         print(f"Error fetching {url}: {e}")
         return ""
-    
-    # Use Readability to extract the main content
-    doc = Document(response.text)
-    content_html = doc.summary()
-    
-    # Optionally, use BeautifulSoup to clean up the HTML and extract text
-    soup = BeautifulSoup(content_html, 'html.parser')
-    return soup.get_text(strip=True)
+
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Find the main content div, articles, or sections
+    content = soup.find('article') or soup.find('main') or soup.find('body')
+    return content.get_text(strip=True) if content else soup.get_text(strip=True)
+
 
 # Determines whether a response contains useful information`
 def is_useful_information(response: str, user: str) -> bool:
