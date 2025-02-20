@@ -145,8 +145,8 @@ def generate_response(query: str, user:str ) -> str:
                 rag_usage=True,
                 rag_threshold=0.7,
                 rag_k=3)
-            if is_useful_information(response):
-                store_context(response)
+            if is_useful_information(response, user):
+                store_context(response, user)
         else:
             response = generate(model='4o-mini',
                 system="You are an AI advisor for Tufts University Computer Science students. Answer student queries related to course selection, prerequisites, research opportunities, career advice, internships, and university policies. If user asks an unrelated question, remind the user your purpose. Be conversational, and friendly.",
