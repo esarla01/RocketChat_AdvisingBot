@@ -1,6 +1,7 @@
 import requests
 from flask import Flask, request, jsonify
 from llmproxy import generate
+from utils import generate_response
 
 app = Flask(__name__)
 
@@ -25,14 +26,7 @@ def main():
     print(f"Message from {user} : {message}")
 
     # Generate a response using LLMProxy
-    response = generate(
-        model='4o-mini',
-        system='answer my question and add keywords',
-        query= message,
-        temperature=0.0,
-        lastk=0,
-        session_id='GenericSession'
-    )
+    response = generate_response(message, user)
 
     response_text = response['response']
     
