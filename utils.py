@@ -130,7 +130,7 @@ def generate_response(query: str, user:str ) -> str:
         if  should_search_web(query, user):
             parsed_query = parse_query(query, user)
 
-            google_search_results = google_search(parsed_query, user)
+            google_search_results = google_search(parsed_query)
 
             context = google_search_results;
 
