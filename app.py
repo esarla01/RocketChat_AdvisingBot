@@ -26,7 +26,7 @@ def main():
         data = request.get_json() 
 
         # Initialize user variable
-        user = "Unknown"
+        user = "GenericSession"
 
         # Extract relevant information
         user = data.get("user_name", "Unknown")
