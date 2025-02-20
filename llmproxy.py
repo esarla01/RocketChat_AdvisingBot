@@ -1,12 +1,10 @@
+import os
 import json
 import requests
 
-# Read proxy config from config.json
-with open('config.json', 'r') as file:
-    config = json.load(file)
-
-end_point = config['endPoint']
-api_key = config['apiKey']
+# Read proxy config from environment
+end_point = os.environ.get("endPoint")
+api_key = os.environ.get("apiKey")
 
 def generate(
 	model: str,
