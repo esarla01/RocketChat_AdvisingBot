@@ -122,13 +122,15 @@ def store_context(context: str, user:str ) -> None:
 # Generates a response to a user query using the provided context
 def generate_response(query: str, user:str ) -> str:
 
+    print("HELLO!")
+
     try:
         context = None
 
-        if  should_search_web(query):
-            parsed_query = parse_query(query)
+        if  should_search_web(query, user):
+            parsed_query = parse_query(query, user)
 
-            google_search_results = google_search(parsed_query)
+            google_search_results = google_search(parsed_query, user)
 
             context = google_search_results;
 
