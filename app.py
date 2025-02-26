@@ -1,7 +1,7 @@
 import requests
 from flask import Flask, request, jsonify
 from llmproxy import generate, pdf_upload
-from utils import generate_response, send_message
+from utils import send_message
 import os
 
 app = Flask(__name__)
