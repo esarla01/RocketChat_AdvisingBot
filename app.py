@@ -1,3 +1,4 @@
+import time
 import requests
 from flask import Flask, request, jsonify
 from llmproxy import generate, pdf_upload
@@ -17,6 +18,70 @@ app.config['MAIL_DEFAULT_SENDER'] = 'erinsarlak003@gmail.com'
 
 # Dictionary to keep track of users who have received the initial message
 user_initial_message_sent = {}
+
+from datetime import datetime, timedelta
+
+ROCKETCHAT_URL = "https://chat.genaiconnect.net"
+AUTH_HEADERS = {
+    "Content-Type": "application/json",
+    "X-Auth-Token": os.environ.get("RC_token"),
+    "X-User-Id": os.environ.get("RC_userId")
+}
+
+# Dictionary to store the last online time of users
+last_seen = {}
+
+def check_user_online(user):
+    """Check if a user is online in Rocket.Chat."""
+    url = f"{ROCKETCHAT_URL}/api/v1/users.presence?user={user}"
+    response = requests.get(url, headers=AUTH_HEADERS)
+
+    if response.status_code == 200:
+        return response.json().get("presence") == "online"
+    return False
+
+def send_message(user):
+    """Send a message when the user comes back online after inactivity."""
+    url = f"{ROCKETCHAT_URL}/api/v1/chat.postMessage"
+    payload = {
+        "channel": f"@{user}",
+        "text": "Welcome back! If you have any questions about the Tufts CS department, I'm here to help."
+    }
+
+    response = requests.post(url, json=payload, headers=AUTH_HEADERS)
+    if response.status_code == 200:
+        print(f"Message sent to {user}")
+    else:
+        print(f"Failed to send message: {response.json()}")
+
+def monitor_users(users, delay_minutes=30):
+    """Continuously check if users return online after inactivity."""
+    while True:
+        for user in users:
+            is_online = check_user_online(user)
+            now = datetime.now()
+
+            if is_online:
+                # If user is online and not recorded, store the timestamp
+                if user not in last_seen:
+                    last_seen[user] = now
+
+                # Check if the user was offline for more than 'delay_minutes'
+                elif now - last_seen[user] > timedelta(minutes=delay_minutes):
+                    send_message(user)  # Send the message
+                    last_seen[user] = now  # Update last seen time
+
+            else:
+                # If user is offline, update their last seen time
+                last_seen[user] = now
+        
+        time.sleep(10)  # Poll every 10 seconds
+
+# Example: List of users to monitor
+users_to_monitor = ["username1", "username2"]
+
+# Start monitoring users (Run this in a separate thread or background process)
+monitor_users(users_to_monitor)
 
 @app.before_first_request
 def initialize():
@@ -60,31 +125,20 @@ def main():
 
     print(f"Message from {user} : {message}")
 
-    # Check if the user has already received the initial message
-    if user not in user_initial_message_sent:
-        send_message(user)
-        user_initial_message_sent[user] = True
-
-    # Generate a response using LLMProxy
-    # response = generate(
-    #     model='4o-mini',
-    #     system='answer my question and add keywords',
-    #     query= message,
-    #     temperature=0.0,
-    #     lastk=5,
-    #     session_id='user',
-    #     rag_usage=True,
-    #     rag_threshold=0.7,
-    #     rag_k=3
-    # )
+    response = ''
+    # # Check if the user has already received the initial message
+    # # If not, send the initial message, otherwise generate a response
+    # # to their query.
+    # if user not in user_initial_message_sent:
+    #     send_message(user)
+    #     user_initial_message_sent[user] = True
+    # else:
     response = generate_response(app, message, user);
-
-    response_text = response
-    
+ 
     # Send response back
-    print(response_text)
+    print(response)
 
-    return jsonify({"text": response_text})
+    return jsonify({"text": response})
     
 @app.errorhandler(404)
 def page_not_found(e):

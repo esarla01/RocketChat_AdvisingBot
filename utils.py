@@ -29,7 +29,10 @@ def send_message(user):
     payload = {
         "channel": f"@{user}", #Change this to your desired user, for any user it should start with @ then the username
         "text": "Hello, this is JumboBot! I'm here to assist you with any \
-        questtion you have about the computer science department at Tufts. " # This where you add your message to the user
+        questtion you have about the computer science department at Tufts. \
+        I will try to answer your question to the best of my ability, but if \
+        I can't, I will email your question to the department for follow-up. " 
+        # This where you add your message to the user
     }
 
     # Sending the POST request
@@ -104,11 +107,15 @@ def advisor(query: str, user):
         If a query falls outside these areas, kindly remind the user that your 
         expertise is focused on supporting CS students at Tufts.
 
-        If the user is unsatisfied with your response, ask them if they would like 
-        to submit their question via email for further follow-up. If they agree, 
-        request their email address and then use the provided tool to send an email 
-        containing their question(s) to tansu.sarlak@tufts.edu. Ensure their email
-        address is correct by asking them to confirm if necessary.
+        If the user is unsatisfied with your response, give them two options:
+
+        1. Ask them to clarify their question or provide more details.
+        2. After a few attempts, if they still seem unsatisfied, ask them
+        if they would like to submit their question via email for further follow-up.
+        
+        If they agree, request their email address and then use the provided tool 
+        to send an email containing their question(s) to tansu.sarlak@tufts.edu. 
+        Ensure their email address is correct by asking them to confirm if necessary.
 
         When instructing the user to execute a tool on your behalf, respond strictly 
         with the tool's name and parameters. 
@@ -144,7 +151,7 @@ def send_email(app, dst, subject, content):
         with app.app_context():
             msg = Message(subject=subject,
                           sender="erinsarlak003@gmail.com",
-                          recipients=["tansu.erin@gmail.com"],
+                          recipients=["tansu.sarlak@tufts.edu"],
                           cc=[dst],  # Add dst to cc
                           body=content)
             mail.send(msg)
