@@ -35,42 +35,37 @@ def hello_world():
 @app.route('/query', methods=['POST'])
 def main():
 
-    try: 
-        data = request.get_json() 
-        message = data.get("text", "")
-         # Initialize user variable
-        user = "GenericSession"
+    data = request.get_json() 
 
-        # Extract relevant information
-        user = data.get("user_name", "Unknown")
+    # Extract relevant information
+    user = data.get("user_name", "Unknown")
+    message = data.get("text", "")
 
-        # pdf_path = 'soe-grad-handbook.pdf'
-        
-        # # Check if PDF file is already uploaded
-        # if not os.path.exists(pdf_path):
-        #     pdf_upload(
-        #         path=pdf_path,
-        #         session_id=user,
-        #         strategy='smart')
+    print(data)
 
-        print(data)
+    # Ignore bot messages
+    if data.get("bot") or not message:
+        return jsonify({"status": "ignored"})
 
-        # Ignore bot messages
-        if data.get("bot") or not message:
-            return jsonify({"status": "ignored"})
+    print(f"Message from {user} : {message}")
 
-        print(f"Message from {user} : {message}")
+    # Generate a response using LLMProxy
+    response = generate(
+        model='4o-mini',
+        system='answer my question and add keywords',
+        query= message,
+        temperature=0.0,
+        lastk=0,
+        session_id='GenericSession',
+        rag_usage=True,
+        rag_threshold=0.7,
+        rag_k=3
+    )
 
-        # Generate a response using LLMProxy
-        response = generate_response(message, 'GenericSession')
-
-        response_text = response['response']
-        
-        # Send response back
-        print(response_text)
-    except Exception as e:
-        print(f"Error: {e}")
-        response_text = "An error occurred while processing your request."
+    response_text = response['response']
+    
+    # Send response back
+    print(response_text)
 
     return jsonify({"text": response_text})
     
