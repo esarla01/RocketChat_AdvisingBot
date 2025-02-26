@@ -40,31 +40,42 @@ def send_message(user):
     print(response.json())  
 
 
+import re
+
 def extract_tool(text):
     """
-    Extracts the tool from the given text using regular expressions.
+    Extracts the function name and parameters separately.
 
     Args:
-        text (str): The text to extract the tool from.
+        text (str): The input text containing the function call.
 
     Returns:
-        str: The extracted tool.
+        tuple: (function_name, parameters) if found, otherwise None.
     """
-
-    match = re.search(r'websearch\([^)]*\)', text)
+    match = re.search(r'(\w+)\(([^)]*)\)', text)
     if match:
-        return match.group() 
+        function_name = match.group(1)  # Extract function name
+        params = match.group(2)  # Extract parameters as a string
+        return function_name, params  # Return as a tuple
+    return None, None  # Return None if no function call is found
 
-    match = re.search(r'get_page\([^)]*\)', text)
-    if match:
-        return match.group() 
+import ast
 
-    match = re.search(r'send_email\([^)]*\)', text)
-    if match:
-        return match.group() 
+def parse_params(params):
+    """
+    Safely parses function parameters from a string.
+    
+    Args:
+        params (str): The string representation of function parameters.
 
-    return
-
+    Returns:
+        list: A list of parsed parameters.
+    """
+    try:
+        return list(ast.literal_eval(f"({params})"))  # Convert the string to a tuple, then to a list
+    except Exception as e:
+        print(f"Error parsing parameters: {e}")
+        return []
 
 def advisor(query: str, user):
 
@@ -96,16 +107,18 @@ def advisor(query: str, user):
         If the user is unsatisfied with your response, ask them if they would like 
         to submit their question via email for further follow-up. If they agree, 
         request their email address and then use the provided tool to send an email 
-        containing their question(s) to Tansu.Sarlak@tufts.edu.
+        containing their question(s) to erinsarlak003@gmail.com. Ensure their email
+        address is correct by asking them to confirm if necessary.
 
         When instructing the user to execute a tool on your behalf, respond strictly 
-        with the tool's name and parameters. For example:
-        send_email('abc@gmail.com', 'xyz@gmail.com', 'greetings', 'hi, I hope you are well')
+        with the tool's name and parameters. 
 
-        ### Provided Tool Information ###
-        Tool: send_email
-        Parameters: src, dst, subject, content
-    """
+        ### PROVIDED TOOLS INFORMATION ###
+        ##1. Tool to send an email
+        Name: send_email
+        Parameters: dst, subject, content
+        example usage: send_email('abc@gmail.com', 'greetings', 'hi, I hope you are well')
+        """
 
     try:
         response = generate(model='4o-mini',
@@ -123,22 +136,54 @@ def advisor(query: str, user):
         raise e
 
 
-def send_email(app, subject, recipient, body):
+def send_email(app, dst, subject, content):
     """Send an email using Flask-Mail."""
     try:
         mail = Mail(app)
 
         with app.app_context():
             msg = Message(subject=subject,
-                          sender=app.config['MAIL_USERNAME'],
-                          recipients=[recipient],
-                          body=body)
+                          sender="erinsarlak003@gmail.com",
+                          recipients=["tansu.erin@gmail.com", dst],
+                          body=content)
             mail.send(msg)
         
         return True  # Email sent successfully
     except Exception as e:
         print(f"Error sending email: {e}")
         return False  # Email failed
+
+
+def generate_response(app, query: str, user: str):
+    """
+    Generates a response to a user query and executes any extracted tool call.
+
+    Args:
+        app: The Flask app instance (needed for sending emails).
+        query (str): The user's query.
+        user (str): The user's session ID.
+
+    Returns:
+        str: The generated response.
+    """
+    response = advisor(query, user)
+    
+    print("Generated response:", response)
+
+    # Extract tool name and parameters
+    tool_name, params = extract_tool(response)
+
+    if tool_name == "send_email":
+        param_list = parse_params(params)  # Use safer parsing
+        if len(param_list) == 3:  
+            response = send_email(app, *param_list) 
+            print(f"Output from tool: {response}\n\n")
+        else:
+            print("Error: Incorrect number of parameters for send_email.")
+
+
+    return response
+
 
 
 

@@ -1,7 +1,7 @@
 import requests
 from flask import Flask, request, jsonify
 from llmproxy import generate, pdf_upload
-from utils import send_message
+from utils import generate_response, send_message
 import os
 
 app = Flask(__name__)
@@ -54,26 +54,23 @@ def main():
     # Check if the user has already received the initial message
     if user not in user_initial_message_sent:
         send_message(user)
-        # Mark that the user has received the initial message
         user_initial_message_sent[user] = True
 
-    if not data.get("bot") and message:
-        send_message(user)
-
     # Generate a response using LLMProxy
-    response = generate(
-        model='4o-mini',
-        system='answer my question and add keywords',
-        query= message,
-        temperature=0.0,
-        lastk=5,
-        session_id='GenericSession',
-        rag_usage=True,
-        rag_threshold=0.7,
-        rag_k=3
-    )
+    # response = generate(
+    #     model='4o-mini',
+    #     system='answer my question and add keywords',
+    #     query= message,
+    #     temperature=0.0,
+    #     lastk=5,
+    #     session_id='user',
+    #     rag_usage=True,
+    #     rag_threshold=0.7,
+    #     rag_k=3
+    # )
+    response = generate_response(app, message, user);
 
-    response_text = response['response']
+    response_text = response
     
     # Send response back
     print(response_text)
