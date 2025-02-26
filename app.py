@@ -6,6 +6,28 @@ import os
 
 app = Flask(__name__)
 
+@app.before_first_request
+def initialize():
+
+    try:
+
+        pdf_upload(
+            path='undergrad-course-descriptions.pdf',
+            session_id='GenericSession',
+            strategy='smart'
+        )
+
+        pdf_upload(
+            path='sl-bscs-degree-sheet-2028.pdf',
+            session_id='GenericSession',
+            strategy='smart'
+        )
+
+    except Exception as e:
+        print(f"Error during initialization: {e}")
+
+    print("Initialization complete!")
+
 @app.route('/', methods=['POST'])
 def hello_world():
    return jsonify({"text":'Hello from Koyeb - you reached the main page!'})
@@ -40,7 +62,7 @@ def main():
         print(f"Message from {user} : {message}")
 
         # Generate a response using LLMProxy
-        response = generate_response(message, user)
+        response = generate_response(message, 'GenericSession')
 
         response_text = response['response']
         
