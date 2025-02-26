@@ -45,6 +45,9 @@ def send_message(user):
 
 import re
 
+import re
+import ast
+
 def extract_tool(text):
     """
     Extracts the function name and parameters separately.
@@ -53,21 +56,20 @@ def extract_tool(text):
         text (str): The input text containing the function call.
 
     Returns:
-        tuple: (function_name, parameters) if found, otherwise None.
+        tuple: (function_name, parameters) if found, otherwise (None, None).
     """
-    match = re.search(r'(\w+)\(([^)]*)\)', text)
+    match = re.search(r'(\w+)\(([\s\S]*)\)', text)
     if match:
         function_name = match.group(1)  # Extract function name
         params = match.group(2)  # Extract parameters as a string
-        return function_name, params  # Return as a tuple
+        return function_name, params.strip()  # Return as a tuple
     return None, None  # Return None if no function call is found
-
-import ast
 
 def parse_params(params):
     """
-    Safely parses function parameters from a string.
-    
+    Safely parses function parameters from a string, handling cases 
+    where multi-line text arguments contain escaped newline characters.
+
     Args:
         params (str): The string representation of function parameters.
 
@@ -75,10 +77,21 @@ def parse_params(params):
         list: A list of parsed parameters.
     """
     try:
-        return list(ast.literal_eval(f"({params})"))  # Convert the string to a tuple, then to a list
+        # Convert the parameters string into a Python tuple safely
+        parsed_params = ast.literal_eval(f"({params})")
+
+        # Ensure the result is a list
+        if isinstance(parsed_params, tuple):
+            return list(parsed_params)
+        return [parsed_params]
+    
+    except SyntaxError as e:
+        print(f"Syntax error while parsing parameters: {e}")
     except Exception as e:
         print(f"Error parsing parameters: {e}")
-        return []
+
+    return []
+
 
 def advisor(query: str, user):
 
@@ -99,9 +112,7 @@ def advisor(query: str, user):
 
         You are a friendly and knowledgeable AI advisor dedicated to supporting 
         Tufts University Computer Science students, capable of answering their
-        questions and escalating complex issues to the department chair. Always 
-        remind that you can send an email to the department chair if you cannot 
-        answer their question.
+        questions and escalating complex issues to the department chair. 
 
         ### Knowledge Base
         You have access to information about:
