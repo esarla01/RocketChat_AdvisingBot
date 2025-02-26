@@ -99,8 +99,8 @@ def advisor(query: str, user):
 
         You are a friendly and knowledgeable AI advisor dedicated to supporting 
         Tufts University Computer Science students. Tell user that you are here to help 
-        them with their questions about the CS department, and if you can't answer 
-        their question, you can help them email the department for follow-up.
+        them with their questions about the CS department, and state you can also
+        help them submit a questionton to the department for follow-up.
 
         ### **Your Role:**
         Your primary function is to assist students with:
@@ -127,7 +127,7 @@ def advisor(query: str, user):
         ### **Email Format:**
         The email content should be structured as follows:
        
-            Hi Tansu,
+            Hi Tansu (department chair),
 
             We have received a request for further information from a student regarding the following topic:
 
@@ -214,15 +214,13 @@ def generate_response(app, query: str, user: str):
         if len(param_list) == 3:  
             response = send_email(app, *param_list) 
             print(f"Output from tool: {response}\n\n")
+            response = "I've sent you email successfully to the department. \
+            Please check your email and you'll see that you are cc'd to the \
+            request email!" if response else "I failed to send the email. Is \
+            the email you provided correct?"
         else:
             print("Error: Incorrect number of parameters for send_email.")
-
-
     return response
-
-
-
-
 
 
 
