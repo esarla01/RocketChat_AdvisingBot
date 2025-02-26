@@ -21,23 +21,20 @@ app.config['MAIL_DEFAULT_SENDER'] = 'erinsarlak003@gmail.com'
 # Dictionary to keep track of users who have received the initial message
 user_initial_message_sent = {}
 
-SHARED_SIDS = ["SID_1", "SID_2", "SID_3"]  # Predefined shared sessions
-
 @app.before_first_request
 def initialize():
     """Uploads shared documents to a small set of predefined RAG SIDs."""
     try:
-        for sid in SHARED_SIDS:  # Upload documents to all shared SIDs
-            pdf_upload(
-                path='undergrad-course-descriptions.pdf',
-                session_id=sid,
-                strategy='smart'
-            )
-            pdf_upload(
-                path='sl-bscs-degree-sheet-2028.pdf',
-                session_id=sid,
-                strategy='smart'
-            )
+        pdf_upload(
+            path='undergrad-course-descriptions.pdf',
+            session_id='GenericSession',
+            strategy='smart'
+        )
+        pdf_upload(
+            path='sl-bscs-degree-sheet-2028.pdf',
+            session_id='GenericSession',
+            strategy='smart'
+        )
 
     except Exception as e:
         print(f"Error during initialization: {e}")
@@ -49,12 +46,6 @@ def initialize():
 def hello_world():
    return jsonify({"text":'Hello from Koyeb - you reached the main page!'})
 
-\
-def assign_shared_sid(user):
-    """Assigns a user to one of the predefined shared SIDs."""
-    index = int(hashlib.md5(user.encode()).hexdigest(), 16) % len(SHARED_SIDS)
-    return SHARED_SIDS[index]
-
 
 @app.route('/query', methods=['POST'])
 def main():
@@ -65,7 +56,6 @@ def main():
     message = data.get("text", "")
 
     print(user)
-
     print(data)
 
     # Ignore bot messages
@@ -74,21 +64,7 @@ def main():
 
     print(f"Message from {user}: {message}")
 
-    # Check if the user has already received the initial message
-    # If not, send the initial message; otherwise, generate a response to their query.
-    # if user not in user_initial_message_sent:
-    #     send_message(user)
-    #     user_initial_message_sent[user] = True
-    # else:
-
-    
-   # Assign user to one of the shared SIDs
-    session_id = assign_shared_sid(user)
-    print(f"Assigned SID for {user}: {session_id}")
-
-    # Generate response using the assigned shared SID
-    response = generate_response(app, message, session_id)  # Pass shared SID
- 
+    response = generate_response(app, message, user)  # Pass shared SID
  
     # Send response back
     print(response)
