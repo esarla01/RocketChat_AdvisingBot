@@ -110,12 +110,13 @@ def hello_world():
 
 @app.route('/query', methods=['POST'])
 def main():
-
     data = request.get_json() 
 
     # Extract relevant information
     user = data.get("user_name", "Unknown")
     message = data.get("text", "")
+
+    print(user)
 
     print(data)
 
@@ -123,17 +124,15 @@ def main():
     if data.get("bot") or not message:
         return jsonify({"status": "ignored"})
 
-    print(f"Message from {user} : {message}")
+    print(f"Message from {user}: {message}")
 
-    response = ''
-    # # Check if the user has already received the initial message
-    # # If not, send the initial message, otherwise generate a response
-    # # to their query.
+    # Check if the user has already received the initial message
+    # If not, send the initial message; otherwise, generate a response to their query.
     # if user not in user_initial_message_sent:
     #     send_message(user)
     #     user_initial_message_sent[user] = True
     # else:
-    response = generate_response(app, message, user);
+    response = generate_response(app, message, user)
  
     # Send response back
     print(response)
