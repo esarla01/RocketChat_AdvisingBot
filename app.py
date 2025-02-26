@@ -4,6 +4,8 @@ from flask import Flask, request, jsonify
 from llmproxy import generate, pdf_upload
 from utils import generate_response, send_message
 import os
+import hashlib
+
 
 app = Flask(__name__)
 
@@ -19,94 +21,40 @@ app.config['MAIL_DEFAULT_SENDER'] = 'erinsarlak003@gmail.com'
 # Dictionary to keep track of users who have received the initial message
 user_initial_message_sent = {}
 
-from datetime import datetime, timedelta
-
-ROCKETCHAT_URL = "https://chat.genaiconnect.net"
-AUTH_HEADERS = {
-    "Content-Type": "application/json",
-    "X-Auth-Token": os.environ.get("RC_token"),
-    "X-User-Id": os.environ.get("RC_userId")
-}
-
-# Dictionary to store the last online time of users
-last_seen = {}
-
-def check_user_online(user):
-    """Check if a user is online in Rocket.Chat."""
-    url = f"{ROCKETCHAT_URL}/api/v1/users.presence?user={user}"
-    response = requests.get(url, headers=AUTH_HEADERS)
-
-    if response.status_code == 200:
-        return response.json().get("presence") == "online"
-    return False
-
-def send_message(user):
-    """Send a message when the user comes back online after inactivity."""
-    url = f"{ROCKETCHAT_URL}/api/v1/chat.postMessage"
-    payload = {
-        "channel": f"@{user}",
-        "text": "Welcome back! If you have any questions about the Tufts CS department, I'm here to help."
-    }
-
-    response = requests.post(url, json=payload, headers=AUTH_HEADERS)
-    if response.status_code == 200:
-        print(f"Message sent to {user}")
-    else:
-        print(f"Failed to send message: {response.json()}")
-
-def monitor_users(users, delay_minutes=30):
-    """Continuously check if users return online after inactivity."""
-    while True:
-        for user in users:
-            is_online = check_user_online(user)
-            now = datetime.now()
-
-            if is_online:
-                # If user is online and not recorded, store the timestamp
-                if user not in last_seen:
-                    last_seen[user] = now
-
-                # Check if the user was offline for more than 'delay_minutes'
-                elif now - last_seen[user] > timedelta(minutes=delay_minutes):
-                    send_message(user)  # Send the message
-                    last_seen[user] = now  # Update last seen time
-
-            else:
-                # If user is offline, update their last seen time
-                last_seen[user] = now
-        
-        time.sleep(10)  # Poll every 10 seconds
-
-# Example: List of users to monitor
-users_to_monitor = ["username1", "username2"]
-
-# Start monitoring users (Run this in a separate thread or background process)
-monitor_users(users_to_monitor)
+SHARED_SIDS = ["SID_1", "SID_2", "SID_3"]  # Predefined shared sessions
 
 @app.before_first_request
 def initialize():
-
+    """Uploads shared documents to a small set of predefined RAG SIDs."""
     try:
-        pdf_upload(
-            path='undergrad-course-descriptions.pdf',
-            session_id='GenericSession',
-            strategy='smart'
-        )
-
-        pdf_upload(
-            path='sl-bscs-degree-sheet-2028.pdf',
-            session_id='GenericSession',
-            strategy='smart'
-        )
+        for sid in SHARED_SIDS:  # Upload documents to all shared SIDs
+            pdf_upload(
+                path='undergrad-course-descriptions.pdf',
+                session_id=sid,
+                strategy='smart'
+            )
+            pdf_upload(
+                path='sl-bscs-degree-sheet-2028.pdf',
+                session_id=sid,
+                strategy='smart'
+            )
 
     except Exception as e:
         print(f"Error during initialization: {e}")
 
-    print("Initialization complete!")
+    print("Initialization complete with shared RAG sessions!")
+
 
 @app.route('/', methods=['POST'])
 def hello_world():
    return jsonify({"text":'Hello from Koyeb - you reached the main page!'})
+
+\
+def assign_shared_sid(user):
+    """Assigns a user to one of the predefined shared SIDs."""
+    index = int(hashlib.md5(user.encode()).hexdigest(), 16) % len(SHARED_SIDS)
+    return SHARED_SIDS[index]
+
 
 @app.route('/query', methods=['POST'])
 def main():
@@ -132,7 +80,15 @@ def main():
     #     send_message(user)
     #     user_initial_message_sent[user] = True
     # else:
-    response = generate_response(app, message, user)
+
+    
+   # Assign user to one of the shared SIDs
+    session_id = assign_shared_sid(user)
+    print(f"Assigned SID for {user}: {session_id}")
+
+    # Generate response using the assigned shared SID
+    response = generate_response(app, message, session_id)  # Pass shared SID
+ 
  
     # Send response back
     print(response)
