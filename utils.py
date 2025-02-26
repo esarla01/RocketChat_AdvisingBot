@@ -107,7 +107,7 @@ def advisor(query: str, user):
         If the user is unsatisfied with your response, ask them if they would like 
         to submit their question via email for further follow-up. If they agree, 
         request their email address and then use the provided tool to send an email 
-        containing their question(s) to erinsarlak003@gmail.com. Ensure their email
+        containing their question(s) to tansu.sarlak@tufts.edu. Ensure their email
         address is correct by asking them to confirm if necessary.
 
         When instructing the user to execute a tool on your behalf, respond strictly 
@@ -144,7 +144,8 @@ def send_email(app, dst, subject, content):
         with app.app_context():
             msg = Message(subject=subject,
                           sender="erinsarlak003@gmail.com",
-                          recipients=["tansu.erin@gmail.com", dst],
+                          recipients=["tansu.erin@gmail.com"],
+                          cc=[dst],  # Add dst to cc
                           body=content)
             mail.send(msg)
         

@@ -6,6 +6,15 @@ import os
 
 app = Flask(__name__)
 
+# Email Configuration (Replace with your credentials)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'erinsarlak003@gmail.com'  # Replace with your email
+app.config['MAIL_PASSWORD'] = 'jqqs nlux pnlk pxmz'  # Use App Password
+app.config['MAIL_DEFAULT_SENDER'] = 'erinsarlak003@gmail.com'
+
 # Dictionary to keep track of users who have received the initial message
 user_initial_message_sent = {}
 
