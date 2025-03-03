@@ -43,8 +43,7 @@ def main():
     user = data.get("user_name", "Unknown")
     message = data.get("text", "")
 
-    advisor_response = data.get("advisor_response", False)
-    response = generate_response(message, user, advisor_response)
+    response = generate_response(message, user)
 
     return jsonify({"text": response})
     

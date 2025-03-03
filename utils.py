@@ -48,7 +48,7 @@ def parse_params(params):
 
     return []
 
-def advisor(query: str, user: str, advisor_response: bool):
+def advisor(query: str, user: str):
     """
     AI Advisor for Tufts CS Students.
 
@@ -157,7 +157,7 @@ def advisor(query: str, user: str, advisor_response: bool):
     """
 
     try:
-        if advisor_response:
+        if user == "HumanAdvisor":
             # If this is a response from a human advisor, format it accordingly
             response = generate(model='4o-mini',
                                 system=transmit_response_prompt,
@@ -179,10 +179,9 @@ def advisor(query: str, user: str, advisor_response: bool):
         return "An error occurred while processing your request."
 
 
-def generate_response(query: str, user: str, advisor_response: bool):
+def generate_response(query: str, user: str):
     print("Received query:", query)
     print("User:", user)
-    print("Advisor Response:", advisor_response)
     """
     Generates a response to a user query and executes any extracted tool call.
 
@@ -194,7 +193,7 @@ def generate_response(query: str, user: str, advisor_response: bool):
         str: The generated response.
     """    
 
-    response = advisor(query, user, advisor_response)
+    response = advisor(query, user)
     print("Generated response:", response)
 
     # Extract tool name and parameters
