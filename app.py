@@ -9,37 +9,26 @@ import hashlib
 
 app = Flask(__name__)
 
-# Email Configuration (Replace with your credentials)
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'erinsarlak003@gmail.com'  # Replace with your email
-app.config['MAIL_PASSWORD'] = 'jqqs nlux pnlk pxmz'  # Use App Password
-app.config['MAIL_DEFAULT_SENDER'] = 'erinsarlak003@gmail.com'
 
-# Dictionary to keep track of users who have received the initial message
-user_initial_message_sent = {}
+# @app.before_first_request
+# def initialize():
+#     """Uploads shared documents to a small set of predefined RAG SIDs."""
+#     try:
+#         pdf_upload(
+#             path='undergrad-course-descriptions.pdf',
+#             session_id='GenericSession',
+#             strategy='smart'
+#         )
+#         pdf_upload(
+#             path='sl-bscs-degree-sheet-2028.pdf',
+#             session_id='GenericSession',
+#             strategy='smart'
+#         )
 
-@app.before_first_request
-def initialize():
-    """Uploads shared documents to a small set of predefined RAG SIDs."""
-    try:
-        pdf_upload(
-            path='undergrad-course-descriptions.pdf',
-            session_id='GenericSession',
-            strategy='smart'
-        )
-        pdf_upload(
-            path='sl-bscs-degree-sheet-2028.pdf',
-            session_id='GenericSession',
-            strategy='smart'
-        )
+#     except Exception as e:
+#         print(f"Error during initialization: {e}")
 
-    except Exception as e:
-        print(f"Error during initialization: {e}")
-
-    print("Initialization complete with shared RAG sessions!")
+#     print("Initialization complete with shared RAG sessions!")
 
 
 @app.route('/', methods=['POST'])
@@ -64,7 +53,7 @@ def main():
 
     print(f"Message from {user}: {message}")
 
-    response = generate_response(app, message, user)  # Pass shared SID
+    response = generate_response(message, user)  # Pass shared SID
  
     # Send response back
     print(response)
