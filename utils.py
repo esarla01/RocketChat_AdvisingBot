@@ -1,4 +1,4 @@
-from llmproxy import generate, retrieve
+from llmproxy import generate
 import requests
 import os
 import re
