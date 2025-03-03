@@ -213,7 +213,7 @@ def send_message(student: str, question: str, background: str):
     """
     try:
         # Compose the email message
-        message = f"Student: {student}\n\nQuestion: {question}\n\nBackground: {background}"
+        message = {f"Student: {student}\n\nQuestion: {question}\n\nBackground: {background}"}
         
         # Send the email
         response = requests.post(
