@@ -40,23 +40,11 @@ def hello_world():
 def main():
     data = request.get_json() 
 
-    # Extract relevant information
     user = data.get("user_name", "Unknown")
     message = data.get("text", "")
 
-    print(user)
-    print(data)
-
-    # Ignore bot messages
-    if data.get("bot") or not message:
-        return jsonify({"status": "ignored"})
-
-    print(f"Message from {user}: {message}")
-
-    response = generate_response(message, user)  # Pass shared SID
- 
-    # Send response back
-    print(response)
+    advisor_response = data.get("advisor_response", False)
+    response = generate_response(message, user, advisor_response)
 
     return jsonify({"text": response})
     

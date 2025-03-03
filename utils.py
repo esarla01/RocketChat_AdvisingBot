@@ -1,4 +1,4 @@
-from llmproxy import generate
+from llmproxy import generate, retrieve
 import requests
 import os
 import re
@@ -48,28 +48,25 @@ def parse_params(params):
 
     return []
 
-def advisor(query: str, user: str):
-
+def advisor(query: str, user: str, advisor_response: bool = False):
     """
-    Function description goes here.
-    
-    Provides guidance and assistance to Tufts University Computer Science students.
+    AI Advisor for Tufts CS Students.
+
+    This function provides guidance to Tufts University Computer Science students.
+    It differentiates between handling user queries (including escalation) and 
+    transmitting a response from a human advisor.
 
     Args:
         query (str): The user's query.
-        user (str, optional): The user's session ID. Defaults to 'GenericSession'.
+        user (str): The user's session ID.
+        advisor_response (bool): Flag indicating if this response is from a human advisor.
 
     Returns:
-        str: The response from the AI advisor.
-
+        str: The AI's response.
     """
-    system = """
-        Your prompt is already strong, but I’ve refined it for clarity, 
-        conciseness, and better structuring while keeping the friendly yet 
-        professional tone. Here’s the improved version:
 
-        ---
-
+    # Original system prompt (unchanged)
+    system_prompt = """
         ### AI Advisor for Tufts CS Students  
 
         You are a **friendly and knowledgeable AI assistant** dedicated to 
@@ -77,7 +74,7 @@ def advisor(query: str, user: str):
         provide **accurate, concise, and actionable** responses to inquiries 
         about **courses, research, careers, and department policies**. If a 
         query is beyond your knowledge, you will **escalate it to a human 
-        advisor**.
+        advisor**. 
 
         ---
 
@@ -108,7 +105,6 @@ def advisor(query: str, user: str):
         - **Always include actionable next steps** when applicable.  
 
         ---
-
         ### **Boundaries**  
         🚫 **Do NOT**:  
         - Complete assignments or coding tasks.  
@@ -147,24 +143,41 @@ def advisor(query: str, user: str):
         - **Example Usage**:  
         ```send_message("Student: Jane Doe", "Question: What are the 
         prerequisites for COMP 160?", "Background: Jane is a sophomore 
-        considering the algorithms course next semester.")```  
-
-            
+        considering the algorithms course next semester.")```      
     """
+
+    # Prompt for transmitting a human advisor's response
+    transmit_response_prompt = """
+    You have received a response from a **human advisor**.  
+    Use this response to provide a clear and direct answer to the student.
+
+    Respond in the following format:
+    - _"I checked with a human advisor, and here’s the guidance: [advisor’s response]. 
+      Let me know if you have any further questions!"_
+    """
+
     try:
-        response = generate(model='4o-mini',
-                            system=system,
-                            query="Query:\n\n{}".format(query),
-                            temperature=0.3,
-                            lastk=10,
-                            session_id=user,
-                            rag_usage=True,
-                            rag_threshold=0.5,
-                            rag_k=3);
+        if advisor_response:
+            # If this is a response from a human advisor, format it accordingly
+            response = generate(model='4o-mini',
+                                system=transmit_response_prompt,
+                                query=f"Human Advisor Response:\n\n{query}",
+                                temperature=0.3,
+                                session_id=user)
+        else:
+            # Standard AI response handling (including escalation if needed)
+            response = generate(model='4o-mini',
+                                system=system_prompt,
+                                query=f"Query:\n\n{query}",
+                                temperature=0.3,
+                                session_id=user)
+
         return response['response']
+    
     except Exception as e:
-        print(f"Error occurred with parsing output: {response}")
-        raise e
+        print(f"Error occurred with parsing output: {e}")
+        return "An error occurred while processing your request."
+
 
 def generate_response(query: str, user: str):
     """
@@ -177,6 +190,19 @@ def generate_response(query: str, user: str):
     Returns:
         str: The generated response.
     """
+    #  Retrieve the information from the rag_context (if any)
+    rag_context = retrieve(
+        query=query,
+            session_id='miniproject_rag_5',
+            rag_threshold= 0.5,
+            rag_k=2
+    )
+
+     # Combine query with rag
+    query = f"{query}\n Current rag_context (not web): {rag_context_string_simple(rag_context)}"
+    
+
+
     response = advisor(query, user)
     print("Generated response:", response)
 
