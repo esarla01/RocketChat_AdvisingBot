@@ -48,7 +48,7 @@ def parse_params(params):
 
     return []
 
-def advisor(query: str, user: str, advisor_response: bool = False):
+def advisor(query: str, user: str, advisor_response: bool):
     """
     AI Advisor for Tufts CS Students.
 
@@ -179,7 +179,7 @@ def advisor(query: str, user: str, advisor_response: bool = False):
         return "An error occurred while processing your request."
 
 
-def generate_response(query: str, user: str, advisor_response: bool = False):
+def generate_response(query: str, user: str, advisor_response: bool):
     """
     Generates a response to a user query and executes any extracted tool call.
 
@@ -190,7 +190,6 @@ def generate_response(query: str, user: str, advisor_response: bool = False):
     Returns:
         str: The generated response.
     """    
-
 
     response = advisor(query, user, advisor_response)
     print("Generated response:", response)
