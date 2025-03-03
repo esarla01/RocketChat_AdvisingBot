@@ -215,6 +215,7 @@ def send_message(student: str, question: str, background: str):
         # Compose the email message
         # Properly format the JSON payload as a dictionary (not a set)
         payload = {
+            "bot": "AI Advisor",
             "student": student,
             "question": question,
             "background": background
