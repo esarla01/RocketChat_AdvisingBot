@@ -24,7 +24,7 @@ app = Flask(__name__)
 #             session_id='GenericSession',
 #             strategy='smart'
 #         )
-
+ 
 #     except Exception as e:
 #         print(f"Error during initialization: {e}")
 

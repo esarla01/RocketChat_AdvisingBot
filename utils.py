@@ -162,12 +162,14 @@ def advisor(query: str, user: str):
             response = generate(model='4o-mini',
                                 system=transmit_response_prompt,
                                 query=f"Human Advisor Response:\n\n{query}",
+                                lastk=10,
                                 temperature=0.3,
                                 session_id=user)
         else:
             # Standard AI response handling (including escalation if needed)
             response = generate(model='4o-mini',
                                 system=system_prompt,
+                                lastk=10,
                                 query=f"Query:\n\n{query}",
                                 temperature=0.3,
                                 session_id=user)
