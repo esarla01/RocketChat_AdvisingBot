@@ -228,7 +228,7 @@ def send_message(student: str, question: str, background: str):
 
         # Ensure a valid response
         if response.status_code == 200:
-            return response.json()  # Assuming the backend returns a meaningful response
+            return "Your query has been forwarded to the department chair for further assistance. I will notify you once a response is received."
 
         return f"Error: Received response code {response.status_code}, Response: {response.text}"
 
