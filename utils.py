@@ -180,6 +180,9 @@ def advisor(query: str, user: str, advisor_response: bool):
 
 
 def generate_response(query: str, user: str, advisor_response: bool):
+    print("Received query:", query)
+    print("User:", user)
+    print("Advisor Response:", advisor_response)
     """
     Generates a response to a user query and executes any extracted tool call.
 
