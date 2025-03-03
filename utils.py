@@ -179,7 +179,7 @@ def advisor(query: str, user: str, advisor_response: bool = False):
         return "An error occurred while processing your request."
 
 
-def generate_response(query: str, user: str):
+def generate_response(query: str, user: str, advisor_response: bool = False):
     """
     Generates a response to a user query and executes any extracted tool call.
 
@@ -189,21 +189,10 @@ def generate_response(query: str, user: str):
 
     Returns:
         str: The generated response.
-    """
-    #  Retrieve the information from the rag_context (if any)
-    rag_context = retrieve(
-        query=query,
-            session_id='miniproject_rag_5',
-            rag_threshold= 0.5,
-            rag_k=2
-    )
-
-     # Combine query with rag
-    query = f"{query}\n Current rag_context (not web): {rag_context_string_simple(rag_context)}"
-    
+    """    
 
 
-    response = advisor(query, user)
+    response = advisor(query, user, advisor_response)
     print("Generated response:", response)
 
     # Extract tool name and parameters
