@@ -213,12 +213,17 @@ def send_message(student: str, question: str, background: str):
     """
     try:
         # Compose the email message
-        message = {f"Student: {student}\n\nQuestion: {question}\n\nBackground: {background}"}
+        # Properly format the JSON payload as a dictionary (not a set)
+        payload = {
+            "student": student,
+            "question": question,
+            "background": background
+        }
         
         # Send the email
         response = requests.post(
             "https://institutional-galina-tufts-077937b9.koyeb.app/query", 
-            json=message
+            json=payload
         )
 
         # Ensure a valid response
