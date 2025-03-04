@@ -1,8 +1,12 @@
-from llmproxy import generate
+from llmproxy import generate, retrieve,text_upload
 import requests
 import os
 import re
 import ast
+import json
+
+GOOGLE_API_KEY = os.getenv("googleSearch")
+SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 def extract_tool(text):
     """
@@ -49,6 +53,37 @@ def parse_params(params):
     return []
 
 def advisor(query: str, user: str):
+    original_query = query
+    # First retrieve the information from the rag_context (if any)
+    rag_context = retrieve(
+        query=query,
+            session_id='miniproject_rag_10',
+            rag_threshold= 0.5,
+            rag_k=2
+    )
+
+    # Combine query with rag
+    query = f"{query} \n Current rag_context (not web): {rag_context_string_simple(rag_context)}"
+
+
+    response = AI_Agent(query)
+
+    tool = extract_tool2(response)
+
+    if tool:
+        query = eval(tool)
+        decision, summary = should_store_in_rag(original_query, query)
+
+        if decision:
+            response = text_upload(
+                text= json.dumps(summary),
+                session_id='miniproject_rag_10',
+                strategy='fixed'
+            )
+        response = AI_Agent(query)
+
+        print(response)
+
     """
     AI Advisor for Tufts CS Students.
 
@@ -74,7 +109,7 @@ def advisor(query: str, user: str):
         provide **accurate, concise, and actionable** responses to inquiries 
         about **courses, research, careers, and department policies**. If a 
         query is beyond your knowledge, you will **escalate it to a human 
-        advisor**. 
+        advisor**.
 
         ---
 
@@ -170,7 +205,7 @@ def advisor(query: str, user: str):
             response = generate(model='4o-mini',
                                 system=system_prompt,
                                 lastk=10,
-                                query=f"Query:\n\n{query}",
+                                query=f"Query:\n\n{query} \n\Some additional context:\n\n{response}",
                                 temperature=0.3,
                                 session_id=user)
 
@@ -253,3 +288,175 @@ def send_message(student: str, question: str, background: str):
 
     except Exception as e:
         return f"Error occurred while sending the message: {e}"
+    
+
+
+def AI_Agent(query):
+    system= f"""
+            You are an AI agent designed to help a chatbot for Tufts University
+            computer science students. Your goal is to get necessary context
+            so that the chatbot can accurately answer to the user's query. 
+            
+            In addition to your own intelligence, you are given access to a 
+            tool to access the web.
+
+            You will not be interacting with user instead, you will be given a
+            query and some initial context (rag_context). You must decide
+            if this initial context is enough to answer the user's query.
+            If the context is not enough, strictly only respond with the tool 
+            name and parameters that you want to execute to get more information.
+            Otherwise, strictly just forward the exact same rag context shared with
+            you, do not try to answer the user's query, just forward the context.
+
+            # If a tool is used
+            The ouput of tool execution will be shared with you so you can decide
+            your next steps. If the user provides you with more information from
+            the web, clean the information and put the important bits into bullet
+            points and strictly just reply with that, nothing else.
+
+            ### PROVIDED TOOLS INFORMATION ###
+            ## 1. Tool to retrieve a list of urls from the web along with a 
+            brief summary about them.
+            ## Intructions: Remember that you have a query from the user, make
+            sure that the parameter you pass to this tool is an enhanced query,
+            suitable for a google search.
+
+            Name: web_search
+            Parameters: query
+            example usage: web_search("Tufts CS Major requirements")
+            """
+
+    response = generate(
+        model='4o-mini',
+        system=system,
+        query=query,
+        temperature=0.1,
+        lastk=3,
+        session_id="miniproject_10",
+        rag_usage=False
+    )
+    return response
+
+def extract_tool2(text):
+    match = re.search(r'web_search\([^)]*\)', text)
+    if match:
+        return match.group()
+    return ""
+
+
+def format_results_for_llm(results):
+    """Format a list of dictionaries into a string for LLM input"""
+    formatted_results = "\n\n".join(
+        [f"Link: {item['link']}\nSummary: {item['summary']}" for item in results]
+    )
+    return formatted_results
+
+def web_search(query, num_results=5):
+    """Perform a Google search and return the top result links with summaries"""
+
+    url = "https://www.googleapis.com/customsearch/v1"
+    params = {
+        "key": GOOGLE_API_KEY,
+        "cx": SEARCH_ENGINE_ID,
+        "q": query,
+        "num": num_results
+    }
+    
+    try:
+        response = requests.get(url, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        # Extract URLs and summaries (snippets) from search result items
+        results = [
+            {"link": item["link"], "summary": item.get("snippet", "No summary available")}
+            for item in data.get("items", [])
+        ]
+
+        results = format_results_for_llm(results)
+        system=f"""
+                You will be given links and summaries. Your job is to use this
+                information to pick the link which you think has the most useful
+                information to answer a query that will also be given to you.
+                Once you identified the url, strictly, just respond with the url
+                and nothing else.
+
+                If no links are provided, just respond with $NO URLS$
+                """
+        response = generate(
+            model='4o-mini',
+            system=system,
+            query=f"query:{query}urls:{results}",
+            temperature=0.1,
+            lastk=1,
+            session_id="GenericSessionId",
+            rag_usage=False
+        )
+        print(f"[Debugging] This is the url: {response['response']}")
+        print(type(response['response']))
+        web_content = get_page(response['response'])
+        return web_content
+
+
+    except requests.exceptions.RequestException as e:
+        return f"Error: {e}"
+    
+
+# function to create a context string from retrieve's return val
+def rag_context_string_simple(rag_context):
+
+    context_string = ""
+
+    i=1
+    for collection in rag_context:
+    
+        if not context_string:
+            context_string = """The following is additional context that may be helpful in answering the user's query."""
+
+        context_string += """
+        #{} {}
+        """.format(i, collection['doc_summary'])
+        j=1
+        for chunk in collection['chunks']:
+            context_string+= """
+            #{}.{} {}
+            """.format(i,j, chunk)
+            j+=1
+        i+=1
+    return context_string
+
+
+def should_store_in_rag(query, web_content):
+        """
+        Asks the LLM whether the web data should be stored in RAG.
+        Returns a tuple (decision, summary)
+        """
+        system_prompt = """
+        You are a knowledge base for a Tufts CS advising chatbot. Given the user 
+        question and retrieved web search results, determine:
+        - Should this information be stored in the chatbot's internal knowledge base (RAG)
+        - If yer, provide a concise, structured summary suitable for storage.
+        Note that it might be better if time-sensitive or dynamic information is not
+        stored in RAG as this might change. However, evergreen and useful information
+        should be stored in RAG.
+
+        The output format shuld be:
+        - Decision: [STORE // DISCARD]
+        - Summary: [Concise summary]
+        """
+
+        response = generate(
+            model = '4o-mini',
+            system = json.dumps(system_prompt),
+            query = f'Query: {json.dumps(query)}. Web content: \n{web_content}',
+            temperature=0.0,
+            lastk=1,
+            session_id='GenericSession')
+        # print(f"\n\n{response}\n\n")
+        decision = "STORE" in response['response']
+        summary = None
+        if decision:
+            summary_start = response['response'].find("- Summary:")
+            if summary_start != -1:
+                summary = response['response'][summary_start + len("- Summary:"):]
+        return decision, summary
