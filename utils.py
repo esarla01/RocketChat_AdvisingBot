@@ -205,7 +205,7 @@ def advisor(query: str, user: str):
             response = generate(model='4o-mini',
                                 system=system_prompt,
                                 lastk=10,
-                                query=f"Query:\n\n{query} \n\Some additional context:\n\n{response}",
+                                query=f"Query:\n\n{query} \n\\Some additional context:\n\n{response}",
                                 temperature=0.3,
                                 session_id=user)
 
