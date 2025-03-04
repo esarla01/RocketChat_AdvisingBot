@@ -84,6 +84,11 @@ def advisor(query: str, user: str):
 
         print(response)
 
+        if response == "$NO CONTEXT$":
+            context=''
+        else:
+            context = response
+
     """
     AI Advisor for Tufts CS Students.
 
@@ -205,7 +210,7 @@ def advisor(query: str, user: str):
             response = generate(model='4o-mini',
                                 system=system_prompt,
                                 lastk=10,
-                                query=f"Query:\n\n{query} \n\\Some additional context:\n\n{response}",
+                                query=f"Query:\n\n{query} \n Some additional context:\n {context}",
                                 temperature=0.3,
                                 session_id=user)
 
@@ -307,6 +312,9 @@ def AI_Agent(query):
             name and parameters that you want to execute to get more information.
             Otherwise, strictly just forward the exact same rag context shared with
             you, do not try to answer the user's query, just forward the context.
+
+            If the query is not a question related to cs advising, strictly reply 
+            with the following message: $NO CONTEXT$
 
             # If a tool is used
             The ouput of tool execution will be shared with you so you can decide
