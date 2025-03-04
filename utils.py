@@ -343,7 +343,7 @@ def AI_Agent(query):
         session_id="miniproject_10",
         rag_usage=False
     )
-    return response
+    return response['response']
 
 def extract_tool2(text):
     match = re.search(r'web_search\([^)]*\)', text)
