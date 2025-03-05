@@ -12,7 +12,7 @@ app = Flask(__name__)
 def send_advisor_message(username, text):
 
     username = "sydney.bulatao"
-    
+
     """Send a direct message to a specific user in Rocket.Chat"""
     rocketchat_url = "https://chat.genaiconnect.net/api/v1/chat.postMessage"
     
@@ -61,13 +61,14 @@ def hello_world():
    return jsonify({"text":'Hello from Koyeb - you reached the main page!'})
 
 
+
 @app.route('/query', methods=['POST'])
 def main():
     data = request.get_json() 
 
     user = data.get("user_name", "Unknown")
     message = data.get("text", "")
-    bot = data.get("bot", "RealUser")
+    bot = data.get("bot", "RealUser!")
 
     if bot == "HumanAdvisor":
         response = generate_response(message, user, True)
