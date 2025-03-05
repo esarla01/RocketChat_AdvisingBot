@@ -9,6 +9,28 @@ import hashlib
 
 app = Flask(__name__)
 
+def send_message(username, text):
+    """Send a direct message to a specific user in Rocket.Chat"""
+    rocketchat_url = "https://your-rocketchat-server/api/v1/chat.postMessage"
+    
+    headers = {
+        "X-Auth-Token": "ISX3g0wXYBf2eKlIRTi66h8_BJeWJmPbIt4Wp-lkrbJ",
+        "X-User-Id": "PG8JfShvZJYdehnf5",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "channel": f"@{username}",  # Sends a direct message to the user
+        "text": text
+    }
+
+    response = requests.post(rocketchat_url, json=payload, headers=headers)
+    
+    if response.status_code == 200:
+        print(f"Message successfully sent to {username}")
+    else:
+        print(f"Failed to send message: {response.json()}")
+
 
 # @app.before_first_request
 def initialize():
@@ -46,6 +68,10 @@ def main():
 
     if bot == "HumanAdvisor":
         response = generate_response(message, user, True)
+
+        send_message(user, f"Your question has been answered: {response}")
+        
+        return jsonify({"text": f"Answer sent to {user} ✅"})
     else: 
         response = generate_response(message, user)
 
