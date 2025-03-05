@@ -194,7 +194,7 @@ def advisor(query: str, user: str, bot):
     """
 
     try:
-        if user == "HumanAdvisor":
+        if bot == "HumanAdvisor":
             # If this is a response from a human advisor, format it accordingly
             response = generate(model='4o-mini',
                                 system=transmit_response_prompt,
