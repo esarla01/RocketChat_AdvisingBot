@@ -11,8 +11,6 @@ app = Flask(__name__)
 
 def send_advisor_message(username, text):
 
-    username = "tansu.sarlak"
-
     """Send a direct message to a specific user in Rocket.Chat"""
     rocketchat_url = "https://chat.genaiconnect.net/api/v1/chat.postMessage"
     
