@@ -55,7 +55,7 @@ def parse_params(params):
 
     return []
 
-def advisor(query: str, user: str, bot=False):
+def advisor(query: str, user: str, bot):
   
     rag_context = retrieve(
         query=query,
@@ -254,7 +254,7 @@ def send_message(student: str, question: str, background: str):
     except Exception as e:
         return f"Error occurred while sending the message: {e}"
     
-def generate_response(query: str, user: str):
+def generate_response(query: str, user: str, bot=False):
     print("Received query:", query)
     print("User:", user)
     """
@@ -268,7 +268,7 @@ def generate_response(query: str, user: str):
         str: The generated response.
     """    
 
-    response = advisor(query, user)
+    response = advisor(query, user, bot)
     print("Generated response:", response)
 
     # Extract tool name and parameters
