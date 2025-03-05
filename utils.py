@@ -56,15 +56,18 @@ def parse_params(params):
     return []
 
 def advisor(query: str, user: str, bot):
-  
-    rag_context = retrieve(
-        query=query,
-            session_id='RagSession',
-            rag_threshold= 0.5,
-            rag_k=3
-    )
     context = None
 
+    try:
+        rag_context = retrieve(
+            query=query,
+                session_id='RagSession',
+                rag_threshold= 0.5,
+                rag_k=3
+        )
+    except Exception as e:
+        rag_context = "No relevant rag context!"
+    
     print('Rag Context:', rag_context)
 
     if should_search_web(query, rag_context, user):
