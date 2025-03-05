@@ -55,7 +55,7 @@ def parse_params(params):
 
     return []
 
-def advisor(query: str, user: str):
+def advisor(query: str, user: str, bot=False):
   
     rag_context = retrieve(
         query=query,
@@ -80,7 +80,7 @@ def advisor(query: str, user: str):
     else:
         context = rag_context_string_simple(rag_context)
 
-    if user != "HumanAdvisor":
+    if not bot:
         if not context or context == "No relevant information found on web!":
             query = f"Query:\n{query}"
         else:
@@ -174,11 +174,11 @@ def advisor(query: str, user: str):
         - **Function**: Sends a message to the CS department chair with the 
         student’s query.  
         - **Parameters**:  
-        - **Student:** <"{user}">
+        - **Student:** "{user}"
         - **Question:** `<student's question>`  
         - **Background:** `<helpful context about the inquiry>`  
         - **Example Usage**:  
-        ```send_message("Student: Jane Doe", "Question: What are the 
+        ```send_message("Student: {user}", "Question: What are the 
         prerequisites for COMP 160?", "Background: Jane is a sophomore 
         considering the algorithms course next semester.")```      
     """

@@ -42,9 +42,12 @@ def main():
 
     user = data.get("user_name", "Unknown")
     message = data.get("text", "")
+    bot = data.get("bot", "RealUser")
 
-    # Generate response
-    response = generate_response(message, user)
+    if bot == "HumanAdvisor":
+        response = generate_response(message, user, True)
+    else: 
+        response = generate_response(message, user)
 
     return jsonify({"text": response})
     
