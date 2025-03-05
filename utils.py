@@ -66,8 +66,10 @@ def advisor(query: str, user: str, bot):
                 rag_threshold= 0.5,
                 rag_k=3
         )
+        print('Rag Context:', rag_context)
     except Exception as e:
         rag_context = "No relevant rag context!"
+        print('Error retrieving rag context:', e)
     
     print('Rag Context:', rag_context)
 
