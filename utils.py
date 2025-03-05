@@ -326,8 +326,8 @@ def should_search_web(query: str, context: str, user: str) -> bool:
         user query and retrieved internal knowledge (RAG), determine: Is the 
         existing knowledge sufficient to answer the query? If the query is not
         clear, check the previous messages for context.
-        - If yes, return "NO_SEARCH_NEEDED".
-        - If no, return "SEARCH_NEEDED".     
+        - If yes, strictly return "NO_SEARCH_NEEDED".
+        - If no, strictly return "SEARCH_NEEDED".     
         """,
         query=f"Query: {query}\nContext: {context}",
         temperature=0.0,
