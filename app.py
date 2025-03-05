@@ -2,14 +2,14 @@ import time
 import requests
 from flask import Flask, request, jsonify
 from llmproxy import generate, pdf_upload
-from utils import generate_response, send_message
+from utils import generate_response, store_context
 import os
 import hashlib
 
 
 app = Flask(__name__)
 
-def send_message(username, text):
+def send_advisor_message(username, text):
     """Send a direct message to a specific user in Rocket.Chat"""
     rocketchat_url = "https://your-rocketchat-server/api/v1/chat.postMessage"
     
@@ -69,7 +69,9 @@ def main():
     if bot == "HumanAdvisor":
         response = generate_response(message, user, True)
 
-        send_message(user, f"Your question has been answered: {response}")
+        send_advisor_message(user, response)
+
+        store_context(response)
         
         return jsonify({"text": f"Answer sent to {user} ✅"})
     else: 
