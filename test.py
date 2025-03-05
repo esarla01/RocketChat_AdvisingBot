@@ -1,9 +1,6 @@
-import requests
+from utils import advisor
 
-response_main = requests.post("https://changing-egret-erinsarlak-af2a6dfd.koyeb.app")
-print('Web Application Response:\n', response_main.text, '\n\n')
+if __name__ == "__main__":
+    print(advisor("can you send a message to the human advisor what is the requirment to pass cs degre", "edu_2"))
 
 
-data = {"text":"tell me about tufts"}
-response_llmproxy = requests.post("https://changing-egret-erinsarlak-af2a6dfd.koyeb.app/query", json=data)
-print('LLMProxy Response:\n', response_llmproxy.text)

@@ -11,24 +11,24 @@ app = Flask(__name__)
 
 
 # @app.before_first_request
-# def initialize():
-#     """Uploads shared documents to a small set of predefined RAG SIDs."""
-#     try:
-#         pdf_upload(
-#             path='undergrad-course-descriptions.pdf',
-#             session_id='GenericSession',
-#             strategy='smart'
-#         )
-#         pdf_upload(
-#             path='sl-bscs-degree-sheet-2028.pdf',
-#             session_id='GenericSession',
-#             strategy='smart'
-#         )
+def initialize():
+    """Uploads shared documents to a small set of predefined RAG SIDs."""
+    try:
+        pdf_upload(
+            path='undergrad-course-descriptions.pdf',
+            session_id='RagSession',
+            strategy='smart'
+        )
+        pdf_upload(
+            path='sl-bscs-degree-sheet-2028.pdf',
+            session_id='RagSession',
+            strategy='smart'
+        )
  
-#     except Exception as e:
-#         print(f"Error during initialization: {e}")
+    except Exception as e:
+        print(f"Error during initialization: {e}")
 
-#     print("Initialization complete with shared RAG sessions!")
+    print("Initialization complete with shared RAG sessions!")
 
 
 @app.route('/', methods=['POST'])

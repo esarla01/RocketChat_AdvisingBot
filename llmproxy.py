@@ -6,6 +6,9 @@ import requests
 end_point = os.environ.get("endPoint")
 api_key = os.environ.get("apiKey")
 
+# end_point = "https://a061igc186.execute-api.us-east-1.amazonaws.com/dev"
+# api_key = "comp150-cdr-2025s-aSSTA2yLUUyoV2PZD6cD8y2ZKC1pMgNk5h7qVgNL"
+
 def retrieve(
     query: str,
     session_id: str,
