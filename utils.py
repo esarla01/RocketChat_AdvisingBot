@@ -57,6 +57,7 @@ def parse_params(params):
 
 def advisor(query: str, user: str, bot):
     context = None
+    rag_context = None
 
     try:
         rag_context = retrieve(
