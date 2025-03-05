@@ -70,6 +70,13 @@ def advisor(query: str, user: str):
     if should_search_web(query, rag_context, user):
         parsed_query = parse_query(query)
         context = google_search(parsed_query)
+        store_context(context)
+        context = retrieve(
+            query=query,
+                session_id='RagSession',
+                rag_threshold= 0.5,
+                rag_k=3
+        )
     else:
         context = rag_context_string_simple(rag_context)
 
@@ -203,9 +210,7 @@ def advisor(query: str, user: str):
                                 query=query,
                                 temperature=0.3,
                                 session_id=user)
-            
-        store_context(response)
-            
+                        
         return response['response']
     
     except Exception as e:
