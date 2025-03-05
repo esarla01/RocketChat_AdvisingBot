@@ -336,7 +336,8 @@ def should_search_web(query: str, context: str, user: str) -> bool:
         lastk=10,
         session_id="web_searcher",
         rag_usage=False
-    )    
+    )   
+    print("Error can be here" , response) 
               
     return response['response'] == "SEARCH_NEEDED"
 
