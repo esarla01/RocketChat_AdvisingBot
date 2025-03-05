@@ -11,15 +11,15 @@ app = Flask(__name__)
 
 def send_advisor_message(username, text):
 
-    username = "sydney.bulatao"
+    username = "tansu.sarlak"
 
     """Send a direct message to a specific user in Rocket.Chat"""
     rocketchat_url = "https://chat.genaiconnect.net/api/v1/chat.postMessage"
     
     headers = {
         "Content-Type": "application/json",
-        "X-Auth-Token": "AzNCz3nUBiQDR_dX8iQWxY0Gsc73Q-3ZShPjSqIxW8E",
-        "X-User-Id": "S2xaY9Kq9mTuKt6Hn"
+        "X-Auth-Token": "ISX3g0wXYBf2eKlIRTi66h8_BJeWJmPbIt4Wp-lkrbJ",
+        "X-User-Id": "PG8JfShvZJYdehnf5"
     }
 
     payload = {
