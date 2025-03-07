@@ -16,7 +16,7 @@ if __name__ == "__main__":
         }
 
         payload = {
-            "channel": f"@{username}",  # Sends a direct message to the user
+            "channel": "@tansu.sarlak",  # Sends a direct message to the user
             "text": text
         }
 
