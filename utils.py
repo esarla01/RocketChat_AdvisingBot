@@ -176,7 +176,7 @@ def advisor(query: str, user: str, bot):
                                 system=transmit_response_prompt,
                                 query=f"Human Advisor Response:\n\n{query}",
                                 lastk=10,
-                                temperature=0.3,
+                                temperature=0.7,
                                 session_id=user + 'mini-project')
         else:
             # Standard AI response handling (including escalation if needed)
@@ -184,7 +184,7 @@ def advisor(query: str, user: str, bot):
                                 system=system_prompt,
                                 lastk=10,
                                 query=query,
-                                temperature=0.3,
+                                temperature=0.7,
                                 session_id=user + 'mini-project')
                         
         return response['response']
@@ -362,37 +362,32 @@ def google_search(query: str, num_results: int = 3) -> str:
         if not results:
             return "No relevant information found on web!"
 
-        formatted_results = "\n\n".join(f"Link: {item['link']}\n Summary: {item.get('snippet', 'No summary available')}" for item in results)
+        summaries = []
+        for item in results:
+            url = item['link']
+            content = fetch_full_content(url)
+            summary = generate(
+                model='4o-mini',
+                system="""
+                You are an AI assistant summarizing the relevant information from a website. 
+                Your task is to analyze the content and provide a concise summary that 
+                answers the given query.
 
-        system_prompt = """
-        You are an AI assistant selecting the most relevant search result for a 
-        given query. Your task is to analyze the provided search results and 
-        choose the single most useful link that is likely to contain a 
-        comprehensive answer. 
+                - Summarize the key points and main ideas.
+                - Include relevant details and examples.
+                - Ensure the summary is coherent, well-structured has no 
+                unnecessary information.
+                """,
+                query=f"URL: {url}\nContent:\n{content}",
+                temperature=0.1,
+                lastk=1,
+                session_id="website_summary",
+                rag_usage=False
+            ).get("response", "")
 
-        - Prioritize results from official sources (e.g., university websites) 
-            or authoritative references.
-        - If multiple results seem relevant, select the most detailed and 
-            directly related one.
-        - If none of the results are useful, respond with "$NO URLS$" and 
-            nothing else.
-        - Strictly return only the chosen URL, without any additional text.
-        """
+            summaries.append(summary)
 
-        selected_url = generate(
-            model='4o-mini',
-            system=system_prompt,
-            query=f"Query: {query}\nResults:\n{formatted_results}",
-            temperature=0.1,
-            lastk=1,
-            session_id="google_search",
-            rag_usage=False
-        ).get("response", "$NO URLS$")
-
-        if selected_url != "$NO URLS$":
-            return fetch_full_content(selected_url)
-        else:
-            return "No relevant information found on web!"
+        return "\n\n".join(summaries)
 
     except requests.exceptions.RequestException as e:
         return f"Error: {e}"

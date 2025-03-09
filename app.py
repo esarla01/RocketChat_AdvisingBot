@@ -49,6 +49,11 @@ def initialize():
             session_id='RagSession',
             strategy='smart'
         )
+        pdf_upload(
+            path='major-structures.pdf',
+            session_id='RagSession',
+            strategy='smart'
+        )
  
     except Exception as e:
         print(f"Error during initialization: {e}")
