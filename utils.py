@@ -73,7 +73,7 @@ def advisor(query: str, user: str, bot):
     
     print('Rag Context:', rag_context)
 
-    query = 'Query: ' + query + 'Rag Context: ' + rag_context
+    # query = 'Query: ' + query + 'Rag Context: ' + rag_context
 
     # if should_search_web(query, rag_context, user):
     #     parsed_query = parse_query(query)
@@ -86,13 +86,14 @@ def advisor(query: str, user: str, bot):
     #             rag_k=3
     #     )
     # else:
-    #     context = rag_context_string_simple(rag_context)
+    
+    context = rag_context_string_simple(rag_context)
 
-    # if not bot:
-    #     if not context or context == "No relevant information found on web!":
-    #         query = f"Query:\n{query}"
-    #     else:
-    #         query = f"Query:\n{query}. Some additional context: \n{context}" 
+    if not bot:
+        if not context or context == "No relevant information found on web!":
+            query = f"Query:\n{query}"
+        else:
+            query = f"Query:\n{query}. Some additional context: \n{context}" 
 
     
     
