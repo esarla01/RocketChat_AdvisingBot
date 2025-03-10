@@ -73,24 +73,28 @@ def advisor(query: str, user: str, bot):
     
     print('Rag Context:', rag_context)
 
-    if should_search_web(query, rag_context, user):
-        parsed_query = parse_query(query)
-        context = google_search(parsed_query)
-        store_context(context)
-        context = retrieve(
-            query=query,
-                session_id='RagSession',
-                rag_threshold= 0.5,
-                rag_k=3
-        )
-    else:
-        context = rag_context_string_simple(rag_context)
+    query = 'Query: ' + query + 'Rag Context: ' + rag_context
 
-    if not bot:
-        if not context or context == "No relevant information found on web!":
-            query = f"Query:\n{query}"
-        else:
-            query = f"Query:\n{query}. Some additional context: \n{context}" 
+    # if should_search_web(query, rag_context, user):
+    #     parsed_query = parse_query(query)
+    #     context = google_search(parsed_query)
+    #     store_context(context)
+    #     context = retrieve(
+    #         query=query,
+    #             session_id='RagSession',
+    #             rag_threshold= 0.5,
+    #             rag_k=3
+    #     )
+    # else:
+    #     context = rag_context_string_simple(rag_context)
+
+    # if not bot:
+    #     if not context or context == "No relevant information found on web!":
+    #         query = f"Query:\n{query}"
+    #     else:
+    #         query = f"Query:\n{query}. Some additional context: \n{context}" 
+
+    
     
     """
     AI Advisor for Tufts CS Students.
