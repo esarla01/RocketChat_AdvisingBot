@@ -6,7 +6,6 @@ from utils import generate_response, store_context
 import os
 import hashlib
 
-
 app = Flask(__name__)
 
 def send_advisor_message(username, text):
