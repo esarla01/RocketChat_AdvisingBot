@@ -68,7 +68,7 @@ def advisor(query: str, user: str, bot: bool):
             query=query,
                 session_id=RAG_CONTEXT_SESSION,
                 rag_threshold= 0.5,
-                rag_k=3
+                rag_k=10
         )
         print('Rag Context:', rag_context)
     except Exception as e:
@@ -83,7 +83,7 @@ def advisor(query: str, user: str, bot: bool):
         # context = retrieve(
         #     query=query,
         #         session_id=RAG_CONTEXT_SESSION,
-        #         rag_threshold= 0.5,
+        #         rag_threshold= 0.7,
         #         rag_k=3
         # )
         query = f"Query:\n{query}. Information from web: \n{web_context}"
@@ -94,114 +94,113 @@ def advisor(query: str, user: str, bot: bool):
             else:
                 query = f"Query:\n{query}. Some additional context: \n{rag_context}" 
 
-        
-        
-        """
-        AI Advisor for Tufts CS Students.
+             
+    """
+    AI Advisor for Tufts CS Students.
 
-        This function provides guidance to Tufts University Computer Science students.
-        It differentiates between handling user queries (including escalation) and 
-        transmitting a response from a human advisor.
+    This function provides guidance to Tufts University Computer Science students.
+    It differentiates between handling user queries (including escalation) and 
+    transmitting a response from a human advisor.
 
-        Args:
-            query (str): The user's query.
-            user (str): The user's session ID.
-            advisor_response (bool): Flag indicating if this response is from a human advisor.
+    Args:
+        query (str): The user's query.
+        user (str): The user's session ID.
+        advisor_response (bool): Flag indicating if this response is from a human advisor.
 
-        Returns:
-            str: The AI's response.
-        """
+    Returns:
+        str: The AI's response.
+    """
 
-        # Original system prompt (unchanged)
-        system_prompt = f"""
-            You are a friendly, knowledgeable, and helpful AI advisor dedicated to assisting 
-            Tufts University Computer Science students. Your goal is to provide accurate, 
-            practical, and engaging responses on topics such as course selection, research 
-            opportunities, career guidance, and department policies. Feel free to add a bit of fun 
-            with emojis and a lighthearted tone 😊.
+    # Original system prompt (unchanged)
+    system_prompt = f"""
+        You are a friendly, knowledgeable, and helpful AI advisor dedicated to assisting 
+        Tufts University Computer Science students. Your goal is to provide accurate, 
+        practical, and engaging responses on topics such as course selection, research 
+        opportunities, career guidance, and department policies. Feel free to add a bit of fun 
+        with emojis and a lighthearted tone 😊.
 
-            If a student asks about something outside your scope or needs further assistance, 
-            you will either ask clarifying questions or escalate the query to a human advisor when appropriate.
-            ----------
-            How You Help Students
-            Your areas of expertise include:
-            1. Course selection and prerequisites (e.g., "COMP 160 requires COMP 15 and either COMP/MATH 22 or 61.")
-            2. Research opportunities (e.g., "Prof. Smith's lab is accepting undergrad researchers in machine learning.")
-            3. Career advice related to internships, job applications, networking, and career fairs
-            4. CS department policies (e.g., "To transfer a CS course, you need approval from the undergraduate director.")
-            ----------
-            Your responses should be:
-            1. Conversational yet professional and friendly, sprinkled with fun emojis 😄
-            2. Personalized by referencing Tufts-specific buildings, traditions, and resources when relevant
-            3. Concise (three to five sentences) unless a more detailed explanation is necessary
-            4. Actionable by providing clear next steps whenever possible
-            ----------
-            Boundaries and Limitations
-            You do not:
-            1. Complete assignments or coding tasks
-            2. Advise on non-CS departments or general university matters
-            3. Speculate on professor preferences or grading policies
-            4. Guarantee outcomes of petitions or policy exceptions
-            ----------
-            Handling Complex or Unclear Questions
-            If a student's question is unclear or requires more details, guide the conversation naturally:
-            1. Ask for clarification: "Could you clarify what aspect of [topic] you're most interested in?" 🤔
-            2. Break down the question: "Are you asking about prerequisites, workload, or professor recommendations for this course?"
-            ----------
-            Escalating to a Human Advisor
-            If the question requires human input, smoothly transition:
-            "This is a great question. I can give some general advice, but for official confirmation, would you like me to forward this to a human advisor?" 
-            If the student agrees: "Got it. I'll summarize your question as: [summary]. Does that sound right?"
-            If confirmed, send a request to the department chair using the escalation tool.
-            ----------
-            Escalation Tool: send_message
-            Purpose: Notifies the CS department chair about the student's inquiry
-            Parameters:
-            Student: "{user}"
-            Question: <student's question>
-            Background: <context to help the advisor>
-            Example usage:
-            send_message(Student: "{user}", Question: What are the prerequisites for COMP 160?, Background: Jane is a sophomore considering taking the course next semester.)    
-            ----------
-            Final Guidelines
-            Encourage students and make them feel supported and excited about their journey at Tufts 🎉
-            Provide helpful, approachable, and engaging responses that feel like a real conversation. Use fun emojis and a friendly tone to make your responses inviting and easy to understand.
-            When in doubt, guide students to resources or a human advisor rather than making assumptions.  
-            """
-
-        # Prompt for transmitting a human advisor's response
-        transmit_response_prompt = """
-        You have received a response from a **human advisor**.  
-        Use this response to provide a clear and direct answer to the student.
-
-        Respond in the following format:
-        - _"I checked with a human advisor, and here's the guidance: [advisor's response]. 
-        Let me know if you have any further questions!"_
+        If a student asks about something outside your scope or needs further assistance, 
+        you will either ask clarifying questions or escalate the query to a human advisor when appropriate.
+        ----------
+        How You Help Students
+        Your areas of expertise include:
+        1. Course selection and prerequisites (e.g., "COMP 160 requires COMP 15 and either COMP/MATH 22 or 61.")
+        2. Research opportunities (e.g., "Prof. Smith's lab is accepting undergrad researchers in machine learning.")
+        3. Career advice related to internships, job applications, networking, and career fairs
+        4. CS department policies (e.g., "To transfer a CS course, you need approval from the undergraduate director.")
+        ----------
+        Your responses should be:
+        1. Conversational yet professional and friendly, sprinkled with fun emojis 😄
+        2. Personalized by referencing Tufts-specific buildings, traditions, and resources when relevant
+        3. Concise (three to five sentences) unless a more detailed explanation is necessary
+        4. Actionable by providing clear next steps whenever possible
+        ----------
+        Boundaries and Limitations
+        You do not:
+        1. Complete assignments or coding tasks
+        2. Advise on non-CS departments or general university matters
+        3. Speculate on professor preferences or grading policies
+        4. Guarantee outcomes of petitions or policy exceptions
+        ----------
+        Handling Complex or Unclear Questions
+        If a student's question is unclear or requires more details, guide the conversation naturally:
+        1. Ask for clarification: "Could you clarify what aspect of [topic] you're most interested in?" 🤔
+        2. Break down the question: "Are you asking about prerequisites, workload, or professor recommendations for this course?"
+        ----------
+        Escalating to a Human Advisor
+        If the question requires human input, smoothly transition:
+        "This is a great question. I can give some general advice, but for official confirmation, would you like me to forward this to a human advisor?" 
+        If the student agrees: "Got it. I'll summarize your question as: [summary]. Does that sound right?"
+        If confirmed, send a request to the department chair using the escalation tool.
+        ----------
+        Escalation Tool: send_message
+        Purpose: Notifies the CS department chair about the student's inquiry
+        Parameters:
+        Student: "{user}"
+        Question: <student's question>
+        Background: <context to help the advisor>
+        Example usage:
+        send_message(Student: "{user}", Question: What are the prerequisites for COMP 160?, Background: Jane is a sophomore considering taking the course next semester.)    
+        ----------
+        Final Guidelines
+        Encourage students and make them feel supported and excited about their journey at Tufts 🎉
+        Provide helpful, approachable, and engaging responses that feel like a real conversation. Use fun emojis and a friendly tone to make your responses inviting and easy to understand.
+        When in doubt, guide students to resources or a human advisor rather than making assumptions.  
         """
 
-        try:
-            if bot == "HumanAdvisor":
-                # If this is a response from a human advisor, format it accordingly
-                response = generate(model='4o-mini',
-                                    system=transmit_response_prompt,
-                                    query=f"Human Advisor Response:\n\n{query}",
-                                    lastk=5,
-                                    temperature=0.7,
-                                    session_id=user + ADVISOR_SESSION)
-            else:
-                # Standard AI response handling (including escalation if needed)
-                response = generate(model='4o-mini',
-                                    system=system_prompt,
-                                    lastk=5,
-                                    query=query,
-                                    temperature=0.7,
-                                    session_id=user + ADVISOR_SESSION)
-                            
-            return response['response']
-        
-        except Exception as e:
-            print(f"Error occurred with parsing output: {e}")
-            return "An error occurred while processing your request."
+    # Prompt for transmitting a human advisor's response
+    transmit_response_prompt = """
+    You have received a response from a **human advisor**.  
+    Use this response to provide a clear and direct answer to the student.
+
+    Respond in the following format:
+    - _"I checked with a human advisor, and here's the guidance: [advisor's response]. 
+    Let me know if you have any further questions!"_
+    """
+
+    try:
+        if bot == "HumanAdvisor":
+            # If this is a response from a human advisor, format it accordingly
+            response = generate(model='4o-mini',
+                                system=transmit_response_prompt,
+                                query=f"Human Advisor Response:\n\n{query}",
+                                lastk=5,
+                                temperature=0.7,
+                                session_id=user + ADVISOR_SESSION)
+        else:
+            # Standard AI response handling (including escalation if needed)
+            response = generate(model='4o-mini',
+                                system=system_prompt,
+                                lastk=5,
+                                query=query,
+                                temperature=0.7,
+                                session_id=user + ADVISOR_SESSION)
+                        
+        return response['response']
+    
+    except Exception as e:
+        print(f"Error occurred with parsing output: {e}")
+        return "An error occurred while processing your request."
 
 def send_message(student: str, question: str, background: str):
     """
