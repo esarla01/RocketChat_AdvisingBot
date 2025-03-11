@@ -405,7 +405,7 @@ def fetch_full_content(url: str, timeout: int = 10) -> str:
     clean_text = " ".join(text.split())
     return clean_text
 
-def google_search(query: str, num_results: int = 1) -> str:
+def google_search(query: str, num_results: int = 5) -> str:
     search_url = "https://www.googleapis.com/customsearch/v1"
     params = {
         "key": GOOGLE_API_KEY, 
@@ -414,7 +414,7 @@ def google_search(query: str, num_results: int = 1) -> str:
         "num": num_results
     }
     try:
-        response = requests.get(search_url, params=params, timeout=10)
+        response = requests.get(search_url, params=params, timeout=30)
         print(f"Response: {response}")
         response.raise_for_status()
         results = response.json().get("items", [])
@@ -422,7 +422,10 @@ def google_search(query: str, num_results: int = 1) -> str:
         if not results:
             return "No relevant information found on web!"
         web_info = []
+        # Debugging info
         for item in results:
+            print(f"Link found: {item['link']}\n")
+        for item in [results[0]]:
             url = item['link']
             print(f"Url: {url}")
             text = fetch_full_content(url)
