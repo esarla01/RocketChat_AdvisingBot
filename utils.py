@@ -153,12 +153,12 @@ def advisor(query: str, user: str, bot: bool):
         ----------
         Escalation Tool: send_message
         Purpose: Notifies the CS department chair about the student's inquiry
-        Parameters:
+        Parameters: All parameters below are strings.
         Student: "{user}"
         Question: <student's question>
         Background: <context to help the advisor>
         Example usage:
-        send_message(Student: "{user}", Question: What are the prerequisites for COMP 160?, Background: Jane is a sophomore considering taking the course next semester.)    
+        send_message(f"Student: {user}", "Question: What are the prerequisites for COMP 160?", "Background: Jane is a sophomore considering taking the course next semester.")
         ----------
         Final Guidelines
         Encourage students and make them feel supported and excited about their journey at Tufts 🎉
@@ -477,4 +477,5 @@ def store_context(context: str) -> None:
     summary = response.get("response", "$DISCARD$")
 
     if summary != "$DISCARD$":
+        print(f"\n\nStoring in RAG: {summary}\n\n")
         text_upload(text=summary, session_id=RAG_CONTEXT_SESSION, strategy='fixed')
