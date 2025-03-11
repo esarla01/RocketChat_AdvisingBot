@@ -78,7 +78,9 @@ def advisor(query: str, user: str, bot: bool):
     rag_context = rag_context_string_simple(rag_context)
     if should_search_web(query, rag_context, user):
         parsed_query = parse_query(query)
+        print(f"parsed query: {parsed_query}")
         web_context = google_search(parsed_query)
+        print(f"web context: {web_context}")
         store_context(web_context)
         # context = retrieve(
         #     query=query,
