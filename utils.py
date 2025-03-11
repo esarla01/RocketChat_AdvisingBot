@@ -75,9 +75,8 @@ def advisor(query: str, user: str, bot: bool):
     except Exception as e:
         rag_context = "No relevant rag context!"
         print('Error retrieving rag context:', e)
-    
-    query = 'Query: ' + query + 'Rag Context: ' + rag_context
 
+    rag_context = rag_context_string_simple(rag_context)
     if should_search_web(query, rag_context, user):
         parsed_query = parse_query(query)
         context = google_search(parsed_query)
@@ -89,12 +88,11 @@ def advisor(query: str, user: str, bot: bool):
                 rag_k=3
         )
     else:
-        context = rag_context_string_simple(rag_context)
         if not bot:
-            if not context or context == "No relevant information found on web!":
+            if not rag_context or rag_context == "No relevant information found on web!":
                 query = f"Query:\n{query}"
             else:
-                query = f"Query:\n{query}. Some additional context: \n{context}" 
+                query = f"Query:\n{query}. Some additional context: \n{rag_context}" 
 
         
         
