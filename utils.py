@@ -415,6 +415,7 @@ def google_search(query: str, num_results: int = 1) -> str:
     }
     try:
         response = requests.get(search_url, params=params, timeout=10)
+        print(f"Response: {response}")
         response.raise_for_status()
         results = response.json().get("items", [])
 
@@ -423,6 +424,7 @@ def google_search(query: str, num_results: int = 1) -> str:
         web_info = []
         for item in results:
             url = item['link']
+            print(f"Url: {url}")
             text = fetch_full_content(url)
             print(f"web info: {text}")
             web_info.append(text)
