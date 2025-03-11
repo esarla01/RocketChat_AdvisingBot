@@ -256,12 +256,11 @@ def generate_response(query: str, user: str, bot=False):
     response = advisor(query, user, bot)
     print("Generated response:", response)
 
-    return response
-
     # Extract tool name and parameters
     tool_name, params = extract_tool(response)
 
     if tool_name == "send_message":
+        print("Entered here!")
         param_list = parse_params(params)  # Use safer parsing
         if len(param_list) == 3:  
             try:
