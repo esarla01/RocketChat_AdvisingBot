@@ -182,6 +182,7 @@ def advisor(query: str, user: str, bot: bool):
 
     try:
         if bot == "HumanAdvisor":
+            print(f"Human advisor with query: {query}")
             # If this is a response from a human advisor, format it accordingly
             response = generate(model='4o-mini',
                                 system=transmit_response_prompt,
@@ -190,6 +191,7 @@ def advisor(query: str, user: str, bot: bool):
                                 temperature=0.7,
                                 session_id=user + ADVISOR_SESSION)
         else:
+            print(f"Not human advisor with query: {query}")
             # Standard AI response handling (including escalation if needed)
             response = generate(model='4o-mini',
                                 system=system_prompt,
