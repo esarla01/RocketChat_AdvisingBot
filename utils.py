@@ -259,6 +259,8 @@ def generate_response(query: str, user: str, bot=False):
     # Extract tool name and parameters
     tool_name, params = extract_tool(response)
 
+    print("Generated response after extract_tool:", response)
+
     if tool_name == "send_message":
         print("Entered here!")
         param_list = parse_params(params)  # Use safer parsing
