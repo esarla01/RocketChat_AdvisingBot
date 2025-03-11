@@ -385,7 +385,7 @@ def google_search(query: str, num_results: int = 3) -> str:
         
         if not results:
             return "No relevant information found on web!"
-
+        print(f"Length results: {len(results)}")
         summaries = []
         for item in results:
             url = item['link']
