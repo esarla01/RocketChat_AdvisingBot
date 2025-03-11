@@ -2,9 +2,15 @@ import os
 import json
 import requests
 
+with open('config.json', 'r') as file:
+    config = json.load(file) 
+
 # Read proxy config from environment
 end_point = os.environ.get("endPoint")
 api_key = os.environ.get("apiKey")
+
+api_key_local = config["apiKey"]
+end_point_local = config["endPoint"]
 
 # end_point = "https://a061igc186.execute-api.us-east-1.amazonaws.com/dev"
 # api_key = "comp150-cdr-2025s-aSSTA2yLUUyoV2PZD6cD8y2ZKC1pMgNk5h7qVgNL"
@@ -87,12 +93,20 @@ def generate(
 
 
 
-def upload(multipart_form_data):
+def upload(multipart_form_data, local=False):
 
-    headers = {
-        'x-api-key': api_key,
-        'request_type': 'add'
-    }
+    if not local:
+        headers = {
+            'x-api-key': api_key,
+            'request_type': 'add'
+        }
+    else:
+        headers = {
+            'x-api-key': api_key_local,
+            'request_type': 'add'
+        }
+
+    end_point = end_point_local if local else end_point
 
     msg = None
     try:
@@ -112,7 +126,8 @@ def pdf_upload(
     path: str,    
     strategy: str | None = None,
     description: str | None = None,
-    session_id: str | None = None
+    session_id: str | None = None,
+    local: bool = False,
     ):
     
     params = {
@@ -126,7 +141,7 @@ def pdf_upload(
         'file': (None, open(path, 'rb'), "application/pdf")
     }
 
-    response = upload(multipart_form_data)
+    response = upload(multipart_form_data, local)
     return response
 
 def text_upload(
