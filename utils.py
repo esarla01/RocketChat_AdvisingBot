@@ -275,7 +275,7 @@ def generate_response(query: str, user: str, bot=False):
         else:
             print("Error: Incorrect number of parameters for send_message.")
             return "Error: Incorrect function parameters."
-    
+    print(f"Generated response before returning: {response}")
     return response
 
 
