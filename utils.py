@@ -79,7 +79,7 @@ def advisor(query: str, user: str, bot: bool):
 
     rag_context = rag_context_string_simple(rag_context)
     if should_search_web(query, rag_context, user):
-        parsed_query = parse_query(query)
+        parsed_query = parse_query(user, query)
         print(f"parsed query: {parsed_query}")
         web_context = google_search(parsed_query)
         print(f"web context: {web_context}")
@@ -334,7 +334,7 @@ def should_search_web(query: str, context: str, user: str) -> bool:
     return response['response'] == "SEARCH_NEEDED"
 
 
-def parse_query(query: str) -> str:
+def parse_query(user:str, query: str) -> str:
     response = generate(
         model='4o-mini',
         system="""
@@ -346,32 +346,63 @@ def parse_query(query: str) -> str:
         """,
         query=f"Reformulate this query for a Google search:\n\n{query}",
         temperature=0.0,
-        lastk=1,
-        session_id="query_parser",
+        lastk=3,
+        session_id=user + ADVISOR_SESSION,
         rag_usage=False
     )
     return response['response']
 
-def fetch_full_content(url: str, timeout:int = 10) -> str:
+# def fetch_full_content(url: str, timeout:int = 10) -> str:
+#     try:
+#         chrome_options = Options()
+#         chrome_options.add_argument("--headless")
+#         driver = webdriver.Chrome(options=chrome_options)
+#         driver.get("https://engineering.tufts.edu/cs/people/faculty/fahad-dogar")
+#         html = driver.page_source
+#         driver.quit()
+#     except Exception as e:
+#         print(f"Error fetching {url}: {e}")
+#         return ""
+    
+#     soup = BeautifulSoup(html, "html.parser")
+
+#     # Extract main content (remove scripts, styles, ads)
+#     for unwanted in soup(["script", "style", "header", "footer", "nav", "aside"]):
+#         unwanted.extract()  # Remove these elements
+
+#     text = soup.get_text(separator=" ", strip=True) # Extract clean text
+#     clean_text = " ".join(text.split()) # [x: ] to include first x words only
+#     return clean_text
+
+def fetch_full_content(url: str, timeout: int = 10) -> str:
+    html = ""
     try:
+        # Try using Selenium to fetch the full rendered page
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         driver = webdriver.Chrome(options=chrome_options)
-        driver.get("https://engineering.tufts.edu/cs/people/faculty/fahad-dogar")
+        driver.get(url)
         html = driver.page_source
         driver.quit()
     except Exception as e:
-        print(f"Error fetching {url}: {e}")
-        return ""
+        print(f"Selenium error fetching {url}: {e}\nFalling back to requests/BeautifulSoup.")
+        try:
+            # Fallback to a simple requests-based approach
+            fallback_response = requests.get(url, timeout=timeout)
+            fallback_response.raise_for_status()
+            html = fallback_response.content
+        except Exception as fallback_e:
+            print(f"Fallback error fetching {url} using requests: {fallback_e}")
+            return ""
     
     soup = BeautifulSoup(html, "html.parser")
-
-    # Extract main content (remove scripts, styles, ads)
+    
+    # Remove unwanted elements to clean up the page
     for unwanted in soup(["script", "style", "header", "footer", "nav", "aside"]):
-        unwanted.extract()  # Remove these elements
-
-    text = soup.get_text(separator=" ", strip=True) # Extract clean text
-    clean_text = " ".join(text.split()) # [x: ] to include first x words only
+        unwanted.extract()
+    
+    text = soup.get_text(separator=" ", strip=True)
+    clean_text = " ".join(text.split())
     return clean_text
 
 def google_search(query: str, num_results: int = 1) -> str:
