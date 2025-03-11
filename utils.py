@@ -15,7 +15,7 @@ SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 # Session variables:
 
-RAG_CONTEXT_SESSION = 'RagSessionTest_0'
+RAG_CONTEXT_SESSION = "RagSessionTest_1"
 ADVISOR_SESSION = "mini-project"
 
 def extract_tool(text):
@@ -438,52 +438,6 @@ def google_search(query: str, num_results: int = 5) -> str:
         return "\n\n".join(web_info)
     except requests.exceptions.RequestException as e:
         return f"Error: {e}"
-
-# def google_search(query: str, num_results: int = 3) -> str:
-
-#     search_url = "https://www.googleapis.com/customsearch/v1"
-#     params = {
-#         "key": GOOGLE_API_KEY, 
-#         "cx": SEARCH_ENGINE_ID, 
-#         "q": query.replace('"', ''), 
-#         "num": num_results
-#     }
-#     try:
-#         response = requests.get(search_url, params=params, timeout=10)
-#         response.raise_for_status()
-#         results = response.json().get("items", [])
-        
-#         if not results:
-#             return "No relevant information found on web!"
-#         summaries = []
-#         for item in results:
-#             url = item['link']
-#             content = fetch_full_content(url)
-#             summary = generate(
-#                 model='4o-mini',
-#                 system="""
-#                 You are an AI assistant summarizing the relevant information from a website. 
-#                 Your task is to analyze the content and provide a concise summary that 
-#                 answers the given query.
-
-#                 - Summarize the key points and main ideas.
-#                 - Include relevant details and examples.
-#                 - Ensure the summary is coherent, well-structured has no 
-#                 unnecessary information.
-#                 """,
-#                 query=f"URL: {url}\nContent:\n{content}",
-#                 temperature=0.1,
-#                 lastk=1,
-#                 session_id="website_summary",
-#                 rag_usage=False
-#             ).get("response", "")
-
-#             summaries.append(summary)
-
-#         return "\n\n".join(summaries)
-
-#     except requests.exceptions.RequestException as e:
-#         return f"Error: {e}" 
 
 def store_context(context: str) -> None:
     """Evaluates and stores meaningful information into RAG for future use."""
