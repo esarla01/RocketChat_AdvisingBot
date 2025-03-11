@@ -256,6 +256,8 @@ def generate_response(query: str, user: str, bot=False):
     response = advisor(query, user, bot)
     print("Generated response:", response)
 
+    return response
+
     # Extract tool name and parameters
     tool_name, params = extract_tool(response)
 
