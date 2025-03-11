@@ -374,7 +374,7 @@ def fetch_full_content(url: str, timeout:int = 10) -> str:
     clean_text = " ".join(text.split()) # [x: ] to include first x words only
     return clean_text
 
-def google_search(query: str, num_results: int = 2) -> str:
+def google_search(query: str, num_results: int = 1) -> str:
     search_url = "https://www.googleapis.com/customsearch/v1"
     params = {
         "key": GOOGLE_API_KEY, 
@@ -393,6 +393,7 @@ def google_search(query: str, num_results: int = 2) -> str:
         for item in results:
             url = item['link']
             text = fetch_full_content(url)
+            print(f"web info: {text}")
             web_info.append(text)
         return "\n\n".join(web_info)
     except requests.exceptions.RequestException as e:
