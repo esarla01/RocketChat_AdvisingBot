@@ -376,24 +376,24 @@ def parse_query(user:str, query: str) -> str:
 
 def fetch_full_content(url: str, timeout: int = 10) -> str:
     html = ""
+    # try:
+    #     # Try using Selenium to fetch the full rendered page
+    #     chrome_options = Options()
+    #     chrome_options.add_argument("--headless")
+    #     driver = webdriver.Chrome(options=chrome_options)
+    #     driver.get(url)
+    #     html = driver.page_source
+    #     driver.quit()
+    # except Exception as e:
+    #     print(f"Selenium error fetching {url}: {e}\nFalling back to requests/BeautifulSoup.")
     try:
-        # Try using Selenium to fetch the full rendered page
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        driver = webdriver.Chrome(options=chrome_options)
-        driver.get(url)
-        html = driver.page_source
-        driver.quit()
-    except Exception as e:
-        print(f"Selenium error fetching {url}: {e}\nFalling back to requests/BeautifulSoup.")
-        try:
-            # Fallback to a simple requests-based approach
-            fallback_response = requests.get(url, timeout=timeout)
-            fallback_response.raise_for_status()
-            html = fallback_response.content
-        except Exception as fallback_e:
-            print(f"Fallback error fetching {url} using requests: {fallback_e}")
-            return ""
+        # Fallback to a simple requests-based approach
+        fallback_response = requests.get(url, timeout=timeout)
+        fallback_response.raise_for_status()
+        html = fallback_response.content
+    except Exception as fallback_e:
+        print(f"Fallback error fetching {url} using requests: {fallback_e}")
+        return ""
     
     soup = BeautifulSoup(html, "html.parser")
     
@@ -407,6 +407,7 @@ def fetch_full_content(url: str, timeout: int = 10) -> str:
 
 def google_search(query: str, num_results: int = 5) -> str:
     search_url = "https://www.googleapis.com/customsearch/v1"
+    print(f"Perfoming google search with: {search_url}")
     params = {
         "key": GOOGLE_API_KEY, 
         "cx": SEARCH_ENGINE_ID, 
