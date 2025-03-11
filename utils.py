@@ -15,7 +15,7 @@ SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 # Session variables:
 
-RAG_CONTEXT_SESSION = "RagSessionTest_2"
+RAG_CONTEXT_SESSION = "RagSessionTest_3"
 ADVISOR_SESSION = "mini-project"
 
 def extract_tool(text):
@@ -145,12 +145,16 @@ def advisor(query: str, user: str, bot: bool):
         1. Ask for clarification: "Could you clarify what aspect of [topic] you're most interested in?" 🤔
         2. Break down the question: "Are you asking about prerequisites, workload, or professor recommendations for this course?"
         ----------
-        Escalating to a Human Advisor
-        If the question requires human input, smoothly transition:
-        "This is a great question. I can give some general advice, but for official confirmation, would you like me to forward this to a human advisor?" 
+        ### Escalating to a Human Advisor
+        If the question requires human input, you are unable to answer the query
+        confidently, or the user seems unsatisfied with the answer, then smoothly transition:
+        "This is a great question. I can give some general advice, 
+        but for official confirmation, would you like me to forward this to a human advisor?" 
         If the student agrees: "Got it. I'll summarize your question as: [summary]. Does that sound right?"
         If confirmed, send a request to the department chair using the escalation tool.
-        ----------
+        If you want to use the escalation tool, strictly respond only with the 
+        tool as explained below:
+    
         Escalation Tool: send_message
         Purpose: Notifies the CS department chair about the student's inquiry
         Parameters: All parameters below are strings.
