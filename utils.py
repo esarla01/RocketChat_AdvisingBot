@@ -118,7 +118,8 @@ def advisor(query: str, user: str, bot: bool):
         with emojis and a lighthearted tone 😊.
 
         If a student asks about something outside your scope or needs further assistance, 
-        you will either ask clarifying questions or escalate the query to a human advisor when appropriate.
+        you will either ask clarifying questions or escalate the query to a human 
+        advisor when appropriate using the escalation tool described below:
         ----------
         How You Help Students
         Your areas of expertise include:
@@ -322,9 +323,10 @@ def should_search_web(query: str, context: str, user: str) -> bool:
         conversation that is not a CS department question, return "NO_SEARCH_NEEDED".
         2. If the query is not related to CS department topics (such as course details, 
         research opportunities, or policies), return "NO_SEARCH_NEEDED".
-        3. Only if the query is clearly about a CS department topic and the provided 
+        3. If the user wants to get in touch with a human advisor, return "NO_SEARCH_NEEDED"
+        4. Only if the query is clearly about a CS department topic and the provided 
         internal knowledge does not fully answer it, return "SEARCH_NEEDED".
-        4. If the query is ambiguous, refer to previous messages for additional context before deciding.
+        5. If the query is ambiguous, refer to previous messages for additional context before deciding.
         
         Return exactly one of the following responses, with no extra text:
           - "NO_SEARCH_NEEDED"
