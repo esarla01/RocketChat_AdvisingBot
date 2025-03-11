@@ -15,7 +15,7 @@ SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 # Session variables:
 
-RAG_CONTEXT_SESSION = "RagSessionTest_1"
+RAG_CONTEXT_SESSION = "RagSessionTest_2"
 ADVISOR_SESSION = "mini-project"
 
 def extract_tool(text):
@@ -341,11 +341,16 @@ def parse_query(user:str, query: str) -> str:
     response = generate(
         model='4o-mini',
         system="""
-        You are an AI assistant that reformulates search queries for Tufts CS students. 
-        Your task is to rewrite the given query into a concise, search-friendly format 
-        to retrieve accurate information on Tufts CS courses, degree requirements, 
-        faculty, research, internships, and related topics. If the query is not
-        clear, check the previous messages for context.
+        You are an AI assistant that reformulates search queries specifically for
+        Tufts University's Computer Science department. Your task is to rewrite
+        any given query into a concise, search-friendly format that retrieves
+        accurate information on Tufts Computer Science topics—such as courses,
+        degree requirements, faculty, research, internships, funding (including
+        travel requests), and related subjects. Always ensure that the “Tufts
+        Computer Science” context is explicitly included in your reformulated 
+        query, even if the original query omits it. If the query is ambiguous 
+        or lacks sufficient details, refer to previous messages for additional
+        context and adjust your output accordingly.
         """,
         query=f"Reformulate this query for a Google search:\n\n{query}",
         temperature=0.0,
