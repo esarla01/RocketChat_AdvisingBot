@@ -106,11 +106,11 @@ def upload(multipart_form_data, local=False):
             'request_type': 'add'
         }
 
-    end_point = end_point_local if local else end_point
+    upload_end_point = end_point_local if local else end_point
 
     msg = None
     try:
-        response = requests.post(end_point, headers=headers, files=multipart_form_data)
+        response = requests.post(upload_end_point, headers=headers, files=multipart_form_data)
         
         if response.status_code == 200:
             msg = "Successfully uploaded. It may take a short while for the document to be added to your context"
