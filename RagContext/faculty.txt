@@ -1,0 +1,97 @@
+Tufts University's Department of Computer Science boasts a diverse faculty with expertise spanning various domains within computer science. Below is an overview of the faculty members, their positions, and areas of research:
+
+**Department Faculty**
+
+- **Jeffrey Foster**
+  - *Position*: Professor and Chair of Computer Science
+  - *Research Areas*: Programming languages, software engineering, security
+
+- **Marty Allen**
+  - *Position*: Associate Teaching Professor
+  - *Research Areas*: Artificial intelligence, machine learning, reinforcement learning
+
+- **Megumi Ando**
+  - *Position*: Minnie McNeal Kenny Assistant Professor
+
+- **Johes Bater**
+  - *Position*: Assistant Professor
+  - *Research Areas*: Privacy-preserving analytics, federated databases, differential privacy, private data sharing, secure computation, database performance, data science, trustworthy database systems
+
+- **Remco Chang**
+  - *Position*: Professor
+  - *Research Areas*: Data visualization, visual analytics, human-computer interaction, databases, computer graphics
+
+- **Ming Chow**
+  - *Position*: Teaching Professor
+  - *Research Areas*: Cybersecurity, web engineering
+
+- **Elyse Cornwall**
+  - *Position*: Assistant Teaching Professor
+
+- **Alva Couch**
+  - *Position*: Associate Professor
+  - *Research Areas*: Data science, software systems engineering, performance analysis, system, network, and data management
+
+- **Lenore Cowen**
+  - *Position*: Professor
+  - *Research Areas*: Computational molecular biology, data science, graph algorithms, network science, discrete mathematics
+
+- **J.P. de Ruiter**
+  - *Position*: Professor of Psychology and Computer Science
+  - *Research Areas*: Cognition and psycholinguistics
+
+- **Fahad Dogar**
+  - *Position*: Associate Professor
+  - *Research Areas*: Improving performance and reliability of networked systems, specifically cloud-based systems, mobile and wireless systems, and the Internet; designing technologies for developing regions
+
+- **Karen Edwards**
+  - *Position*: Assistant Teaching Professor
+  - *Research Areas*: Low-dimensional geometric topology
+
+- **Soha Hassoun**
+  - *Position*: Professor
+  - *Research Areas*: Machine learning, systems biology, metabolic engineering, computer-aided design for integrated circuits
+
+- **Michael Hughes**
+  - *Position*: Assistant Professor
+  - *Research Areas*: Machine learning, probabilistic models, Bayesian inference, variational methods, time-series analysis, semi-supervised learning; clinical informatics, electronic health record analysis
+
+- **Robert Jacob**
+  - *Position*: Professor
+  - *Research Areas*: Human-computer interaction, new interaction modes and techniques, implicit brain-computer interfaces, user interface software
+
+- **Milod Kazerounian**
+  - *Position*: Assistant Teaching Professor
+  - *Research Areas*: Programming languages, type systems, dynamic languages
+
+- **Susan Landau**
+  - *Position*: Professor in Cybersecurity and Policy
+  - *Research Areas*: Cybersecurity policy, privacy, communications surveillance
+
+- **Dave Lillethun**
+  - *Position*: Assistant Teaching Professor
+  - *Research Areas*: Computer science education, distributed systems, operating systems, networked systems, software development, secure systems and networking
+
+- **Liping Liu**
+  - *Position*: Associate Professor
+  - *Research Areas*: Machine learning, data science, deep learning, generative models, time series, graph learning
+
+- **Chris Magnano**
+  - *Position*: Assistant Teaching Professor
+  - *Research Areas*: Computational biology, machine learning, network analysis, exploratory analysis, data science education
+
+- **Saeed Mehraban**
+  - *Position*: Assistant Professor
+  - *Research Areas*: Quantum computational complexity, continuous variable systems
+
+- **Noah Mendelsohn**
+  - *Position*: Professor of the Practice
+  - *Research Areas*: Distributed systems, operating systems, software engineering
+
+- **Reuth Mirsky**
+  - *Position*: Assistant Professor
+  - *Research Areas*: Artificial intelligence, human-agent interaction, plan recognition, explainable AI, multi-agent systems
+
+- **Nate Monroe**
+  - *Position*: Assistant Teaching Professor
+  - *Research Areas*: Computer 

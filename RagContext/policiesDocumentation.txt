@@ -1,0 +1,132 @@
+## Tufts University – Department of Computer Science
+
+### Policies and Documentation for Current Students
+
+This document provides an overview of policies and documentation for undergraduate and graduate students in the Department of Computer Science at Tufts University. The information includes degree requirements, accreditation details, student resources, and program-specific policies.
+
+---
+
+## **Accreditation**
+The Computer Science programs offered in both the School of Arts and Sciences and the School of Engineering are accredited under the general accreditation conferred on Tufts University by the **New England Commission of Higher Education (NECHE).** This ensures that programs meet high academic and professional standards, preparing students for careers and further study in the field of computing.
+
+---
+
+## **Undergraduate Programs**
+
+### **1. Bachelor of Arts (BA) or Bachelor of Science (BS) in Computer Science (School of Arts & Sciences)**
+- **Program Director:** Associate Teaching Professor Mark Sheldon
+- **Degree Requirements:**
+  - **Total Courses:** 10 courses (8 in Computer Science, 2 in Mathematics)
+  - **Core CS Courses:**
+    - CS 15: Introduction to Computer Science
+    - CS 40: Machine Structure & Assembly Language Programming
+    - CS 80 or CS 105: Programming Languages
+    - CS 160: Algorithms
+    - CS 170: Computation Theory
+  - **Electives:**
+    - Three additional CS courses numbered **above 15**
+  - **Mathematics Courses:**
+    - MATH 34 or MATH 39: Calculus II
+    - CS/MATH 61 or MATH 65: Discrete Mathematics
+- **Additional Restrictions:**
+  - No more than **one** research/independent study course may be counted towards the major.
+  - Courses taken pass/fail do not count towards the major.
+  - A **minimum grade of C-** is required in all courses.
+  - Specific courses from the Experimental College or transfer credits require department approval.
+
+### **2. Bachelor of Science in Computer Science (BSCS) (School of Engineering)**
+- **Program Director:** Associate Professor Alva Couch
+- **Mission Statement:**
+  - The BSCS program provides graduates with durable knowledge necessary for leadership in computer science and related fields.
+- **Program Objectives:**
+  - Graduates are expected to advance in **professional careers** or **graduate studies** within **two to five years** after completing the program.
+- **Student Learning Outcomes:**
+  - Ability to analyze, design, and implement computing solutions.
+  - Competency in problem-solving and software development.
+  - Understanding of computing’s ethical and societal impacts.
+  - Effective teamwork and communication skills.
+
+### **3. Bachelor of Science in Data Science (BSDS) (School of Engineering)**
+- **Overview:**
+  - An interdisciplinary program combining **computer science, mathematics, and engineering.**
+  - Prepares students for careers in **data analytics, machine learning, and AI.**
+
+### **4. Minor in Computer Science**
+- **Total Courses Required:** 5
+- **Core Requirements:**
+  - CS 15: Introduction to Computer Science
+  - Two courses chosen from:
+    - CS 40, CS 105, CS 160, or CS 170
+  - CS/MATH 61 or MATH 65: Discrete Mathematics
+  - One additional **elective CS course** (numbered above CS 15)
+- **Restrictions:**
+  - CS courses taken as pass/fail do not count toward the minor.
+  - Research or independent study courses **cannot** be counted towards the minor.
+
+---
+
+## **Graduate Programs**
+
+### **1. Certificate Programs**
+Tufts offers **four-course, graduate-level certificates** in the following areas:
+- Computer Science
+- Human-Computer Interaction
+- Data Science
+- Computer Engineering
+- Post-Baccalaureate in Computer Science
+- **Purpose:** These programs help individuals update skills or gain specialized knowledge without committing to a full graduate degree.
+
+### **2. Master of Science (MS) Programs**
+- **Available Programs:**
+  - MS in Computer Science (On-Campus and Online)
+  - MS in Human-Robot Interaction
+  - MS in Bioengineering (Bioinformatics Track)
+  - MS in Data Science
+  - MS in Computer Engineering
+  - MS in Cybersecurity and Public Policy
+  - MS in Software Systems Development
+  - MSIM Dual Degree Program with the Tufts Gordon Institute
+  - Fifth-Year BS/MS Program
+  - Post-Baccalaureate to MS Program
+- **Program Requirements:**
+  - **Completion of 30 Semester Hour Units (SHUs)** at the **100-level or above**
+  - Course selections vary based on the program, with options for research or independent study.
+
+### **3. Doctor of Philosophy (PhD) Programs**
+- **Available PhD Tracks:**
+  - PhD in Computer Science
+  - PhD in Cognitive Science
+  - PhD in Human-Robot Interaction
+- **PhD Expectations:**
+  - Conduct **original research**
+  - Defend a **doctoral dissertation**
+  - Work closely with a **faculty advisor** and **dissertation committee**
+
+---
+
+## **Additional Policies and Resources**
+
+### **1. Student Forms**
+- Forms available for:
+  - **Major declaration**
+  - **Exemption exams**
+  - **Course waivers**
+- Forms are accessible through the **CS department website**.
+
+### **2. Student Resources**
+- Career Services, academic advising, and technological support are provided.
+- Online resources include:
+  - Internship opportunities
+  - Research opportunities
+  - Advising schedules
+
+### **3. Teaching Assistant (TA) Policies**
+- **Eligibility:**
+  - Undergraduate and graduate students may apply.
+- **Responsibilities:**
+  - Conducting recitations, grading assignments, assisting in labs.
+- **Compensation:**
+  - Based on hours assigned per semester.
+
+For more details on specific policies, visit the [Tufts CS Policies Website](https://engineering.tufts.edu/cs/current-students/policies-and-documentation).
+

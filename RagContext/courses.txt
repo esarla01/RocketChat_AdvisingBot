@@ -1,0 +1,134 @@
+## Tufts University – School of Engineering
+### Bachelor of Science in Computer Science (BSCS)
+#### Class of 2028 (Requirements as established in the 2024-2025 Bulletin)
+
+### Major Requirements
+- All courses must be taken for a letter grade (no pass/fail option).
+- Core courses require a grade of C- or better.
+- The BSCS comprises credit requirements and course requirements established by the School of Engineering and Department of Computer Science.
+- Students must satisfy the School of Engineering (SOE) program requirements in addition to fulfilling major-specific course requirements.
+- A minimum of 120 Semester Hour Units (SHU) is required for degree completion.
+
+### Abbreviations:
+- **SHU** = Semester Hour Unit
+- **SOE** = School of Engineering
+- **C** = Courses with SOE-Computing attribute
+- **E** = Courses with SOE-Engineering attribute
+- **M** = Courses with SOE-Mathematics attribute
+- **NS** = Courses with SOE-Natural Sciences attribute
+- **HASS** = Courses with SOE-HASS (Humanities, Arts, and Social Sciences)
+- **None** = Course without SOE attribute
+
+---
+
+## Course Requirements
+
+### **Mathematics & Natural Sciences** (≥34 SHU)
+- **MATH 32** - Calculus I (4 SHU)
+- **MATH 34 or MATH 39** - Calculus II or Honors Calculus I-II (4 SHU)
+- **MATH 42 or MATH 44** - Calculus III or Honors Calculus III (4 SHU)
+- **CS/MATH 61 or MATH 65** - Discrete Math or Foundations of Higher Mathematics (3 SHU)
+- **MATH 70 or MATH 72** - Linear Algebra or Abstract Linear Algebra (3 SHU)
+- **BIO/CHEM/PHYS Electives** - Two courses from different departments (5 SHU each)
+- **MNS Elective** - Mathematics & Natural Sciences elective (≥3 SHU)
+    - Options include: MATH 166, ES 56, EE 24, EE 104, BME 141, PHY 153.
+- **Probability & Statistics Elective** (≥3 SHU)
+
+### **Humanities, Arts, and Social Sciences (HASS)** (≥24 SHU)
+- **ENG 1 or ENG 3** - Expository Writing (3 SHU)
+- **Humanities Elective** (≥3 SHU)
+- **Social Science Elective** (≥3 SHU)
+- **Ethics & Social Context Elective** (3-4 SHU)
+- Options include: PHIL 24, PHIL 57, EM 54.
+- **Technical Writing (EM 52)** (3 SHU)
+- **Additional HASS courses as needed** to meet the total requirement
+
+### **Engineering** (≥6 SHU)
+- **EN 1** - Applications in Engineering (3 SHU)
+- **ES 2 or ENG-CS Elective** - Introduction to Computing in Engineering or approved elective (≥3 SHU)
+
+### **Computer Science Core** (≥49 SHU)
+- **CS 11** - Introduction to Computer Science (4 SHU)
+- **CS 15** - Data Structures (4 SHU)
+- **CS 40** - Machine Structure & Assembly Language Programming (5 SHU)
+- **CS 105 or CS 80** - Programming Languages (3-5 SHU)
+- **CS 160** - Algorithms (4 SHU)
+- **CS 170** - Computation Theory (3 SHU)
+- **Systems Electives** - Two courses (≥3 SHU each)
+- Options include: ES 4, EE 14, EE 20, CS 45, 107, 111, 112, 114, 116, 117, 118, 119, 120, 121, 122, 124, 140, 146, 147.
+- **CS Electives** - Four courses (≥3 SHU each)
+- CS courses numbered 100-179 (excluding CS 153-155).
+- Additional options include CS courses numbered 16-199 (excluding CS 53-55, 61, 97-99, 153-155, 182-188), and select MATH courses.
+- **CS Social Context Elective** - One course (≥2 SHU)
+- Options include: CS 27, 28, 55, 116, 120, 139, 155, 182-188.
+- **Capstone Project:**
+  - **CS 97** - Senior Capstone Project I (3 SHU)
+  - **CS 98** - Senior Capstone Project II (3 SHU)
+
+### **Breadth Electives** (≥6 SHU)
+- Any SOE-HASS course.
+- Additional options include: BME 50, CEE 32, ENP/ENT/EM courses, CS 99 (internship, max 2), ES 85, one Experimental College course, one Physical Education course.
+
+### **Proposed Course Schedule**
+#### **First Year**
+**Fall Semester:**
+- EN 1 - Introduction to Engineering (3 SHU)
+- MATH 32 - Calculus I (4 SHU)
+- CHEM/PHYS Elective or HASS Elective (3-5 SHU)
+- HASS Elective or ENG 1 - Expository Writing (3-4 SHU)
+
+**Spring Semester:**
+- CS 11 - Introduction to Computer Science (4 SHU)
+- MATH 34 - Calculus II (4 SHU)
+- CHEM/PHYS Elective or HASS Elective (3-5 SHU)
+- HASS Elective or ENG 1 - Expository Writing (3-4 SHU)
+
+#### **Second Year**
+**Fall Semester:**
+- CS 15 - Data Structures (4 SHU)
+- CS/MATH 61 - Discrete Math or MATH 65 (3 SHU)
+- BIO Elective or HASS Elective (3 SHU)
+- EM 52 - Technical and Managerial Communication (3 SHU)
+- MATH 42 - Calculus III (4 SHU)
+
+**Spring Semester:**
+- CS 40 - Machine Structure & Assembly-Language Programming (5 SHU)
+- MATH 70 - Linear Algebra (3 SHU)
+- HASS Elective (3 SHU)
+- ES 2 or ENG-CS Elective (3-4 SHU)
+- CS Elective (3-4 SHU)
+
+#### **Third Year**
+**Fall Semester:**
+- CS 160 - Algorithms (4 SHU)
+- CS or Systems Elective (3-4 SHU)
+- CS or Systems Elective (3-4 SHU)
+- MNS Elective (3-5 SHU)
+- BIO Elective or HASS Elective (3-4 SHU)
+
+**Spring Semester:**
+- CS 105 - Programming Languages (5 SHU)
+- Probability & Statistics Elective (3-4 SHU)
+- CS or Systems Elective (3-4 SHU)
+- HASS Elective (3-4 SHU)
+- Breadth Elective (1-4 SHU)
+
+#### **Fourth Year**
+**Fall Semester:**
+- CS 97 - Senior Capstone Project I (3 SHU)
+- CS 170 - Computation Theory (3 SHU)
+- CS or Systems Elective (3-4 SHU)
+- Breadth Elective (3-4 SHU)
+- Free HASS Elective (3-5 SHU)
+
+**Spring Semester:**
+- CS 98 - Senior Capstone Project II (3 SHU)
+- CS or Systems Elective (3-4 SHU)
+- CS or Systems Elective (3-4 SHU)
+- HASS Elective (3-4 SHU)
+- Free Unrestricted Elective, if needed (3-5 SHU)
+
+---
+
+This document summarizes the BSCS degree requirements and course plan for Tufts University’s School of Engineering, Class of 2028. Students must ensure that their selected courses fulfill all outlined categories while meeting credit requirements.
+

@@ -1,0 +1,102 @@
+## Tufts University – Computer Science Undergraduate Program
+
+### Overview
+The Department of Computer Science at Tufts University offers a comprehensive undergraduate program designed to equip students with foundational and advanced knowledge in computing. The program emphasizes problem-solving, algorithmic thinking, and the application of computing to real-world challenges.
+
+### Degree Programs
+Tufts University offers multiple pathways for undergraduate students interested in Computer Science:
+- **Bachelor of Science in Computer Science (BSCS)** – Offered through the School of Engineering, focusing on computing theory, software development, and practical applications.
+- **Bachelor of Arts in Computer Science (BACS)** – Offered through the School of Arts & Sciences, allowing for greater interdisciplinary flexibility.
+- **Joint Degrees** – Options for joint programs such as Cognitive & Brain Sciences or Data Science.
+- **Minors in Computer Science** – Available to students from any discipline.
+
+### Program Highlights
+- **Strong Theoretical Foundation:** Core courses in algorithms, data structures, and computational theory.
+- **Hands-on Learning:** Emphasis on software engineering, artificial intelligence, and cybersecurity through projects and lab work.
+- **Interdisciplinary Opportunities:** Students can take courses in robotics, machine learning, and computational biology.
+- **Capstone Project:** Seniors engage in real-world computing projects to apply their skills.
+- **Industry Engagement:** Collaborations with tech companies, research opportunities, and internship programs.
+
+### Research & Internship Opportunities
+- **Undergraduate Research:** Opportunities to work with faculty on cutting-edge projects in artificial intelligence, machine learning, and human-computer interaction.
+- **Internships & Co-ops:** Partnerships with major tech firms and startups provide students with hands-on experience.
+
+### Student Organizations & Activities
+- **Tufts Computer Science Exchange (CSE):** A student-run organization offering networking, mentorship, and hackathons.
+- **Women in Tech & Diversity Initiatives:** Support for underrepresented students in computing.
+- **Hackathons & Coding Competitions:** Participation in local and national coding challenges.
+
+### Admissions & Requirements
+- **Application Process:** Students apply through Tufts' general admissions system and declare Computer Science as their major.
+- **Prerequisites:** Strong background in mathematics and programming is recommended.
+- **Scholarships & Financial Aid:** Various funding options are available for eligible students.
+
+For more details, visit the [Tufts Computer Science Department Website](https://engineering.tufts.edu/cs/prospective-students/undergraduate).
+
+
+## Tufts University – Computer Science Master's Programs
+
+### Overview
+The Department of Computer Science at Tufts University offers a variety of master's degree programs designed to provide advanced knowledge in computing, software development, artificial intelligence, and data science. The programs cater to students from both computer science and non-computer science backgrounds.
+
+### Master's Degree Programs
+Tufts offers multiple options for students pursuing graduate studies in Computer Science:
+- **Master of Science in Computer Science (MSCS):** A flexible program covering core computing principles, with options to specialize in areas such as AI, cybersecurity, and software engineering.
+- **Master of Science in Data Science (MSDS):** A multidisciplinary program integrating computing, mathematics, and statistics to prepare students for data-driven careers.
+- **5-Year Bachelor's/Master’s Program:** Available to Tufts undergraduate students who want to complete a combined BS/MS in five years.
+
+### Program Highlights
+- **Rigorous Curriculum:** Core courses include algorithms, machine learning, database systems, and software engineering.
+- **Research Opportunities:** Students can work on cutting-edge research projects in areas such as artificial intelligence, computer security, and human-computer interaction.
+- **Flexible Course Options:** Part-time and full-time enrollment options are available.
+- **Industry Engagement:** Strong connections with tech firms for internships and job placements.
+
+### Admissions & Requirements
+- **Eligibility:** Applicants should have a strong background in mathematics and programming. Students without a CS background may need to complete prerequisite courses.
+- **Application Process:** Submission of transcripts, letters of recommendation, statement of purpose, and GRE scores (optional for some programs).
+- **Financial Aid & Scholarships:** Funding options include fellowships, teaching assistantships, and research assistantships.
+
+### Career Opportunities
+Graduates of Tufts' master’s programs in Computer Science pursue careers in:
+- **Software Engineering**
+- **Machine Learning & AI**
+- **Data Science & Analytics**
+- **Cybersecurity**
+- **Academia & Research**
+
+For more details, visit the [Tufts Computer Science Master's Program Website](https://engineering.tufts.edu/cs/prospective-students/masters).
+
+
+## Tufts University – Computer Science PhD Program
+
+### Overview
+The Department of Computer Science at Tufts University offers a PhD program designed for students interested in advanced research in computing. The program provides opportunities to work on cutting-edge topics in artificial intelligence, cybersecurity, data science, human-computer interaction, and other fields.
+
+### Program Structure
+- **Research-Oriented Curriculum:** The PhD program emphasizes original research, requiring students to develop expertise in a chosen area of computer science.
+- **Coursework Requirements:** Students complete advanced coursework tailored to their research interests.
+- **Qualifying Examination:** A rigorous exam to assess a student’s preparedness for research.
+- **Dissertation Research:** Students work under faculty supervision to produce and defend a dissertation that contributes to the field of computer science.
+- **Teaching Requirement:** Many PhD students gain teaching experience as part of their training.
+
+### Research Areas
+Students in the PhD program can specialize in areas such as:
+- Artificial Intelligence & Machine Learning
+- Cybersecurity & Privacy
+- Data Science & Big Data Analytics
+- Human-Computer Interaction
+- Theoretical Computer Science
+- Robotics & Autonomous Systems
+
+### Admissions & Requirements
+- **Eligibility:** Applicants should have a strong background in computer science or a related field.
+- **Application Process:** Requires transcripts, recommendation letters, a statement of purpose, and GRE scores (optional in some cases).
+- **Funding:** Most PhD students receive full funding, including tuition waivers and stipends through teaching or research assistantships.
+
+### Career Opportunities
+Graduates of Tufts’ PhD program pursue careers in:
+- **Academia:** As faculty members or researchers at universities.
+- **Industry Research Labs:** Working in AI, data science, and software engineering at major tech firms.
+- **Government & Non-Profit Research:** Contributing to national and international research initiatives.
+
+For more details, visit the [Tufts Computer Science PhD Program Website](https://engineering.tufts.edu/cs/prospective-students/phd).

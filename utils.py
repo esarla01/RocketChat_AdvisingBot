@@ -15,7 +15,7 @@ SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 # Session variables:
 
-RAG_CONTEXT_SESSION = "RagSessionTest_3"
+RAG_CONTEXT_SESSION = "RagSessionTest_4"
 ADVISOR_SESSION = "mini-project"
 
 def extract_tool(text):
@@ -463,6 +463,7 @@ def store_context(context: str) -> None:
         for future reference.
         - Consider the following topics as high-priority: academic advising, courses, 
         research, careers, and university policies.
+        - Also consider if the information is relevant to 
 
         2. Summarization or Discarding:
 

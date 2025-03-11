@@ -1,0 +1,82 @@
+**Tufts Computer Science Advising Chatbot - Frequently Asked Questions (FAQ)**
+
+### **General Information**
+
+**Q: What computer science degrees does Tufts University offer?**  
+A: Tufts University offers a Bachelor of Science (BS) in Computer Science (School of Engineering), a Bachelor of Arts (BA) in Computer Science (School of Arts & Sciences), a Bachelor of Science in Data Science, and graduate programs including MS and PhD degrees in Computer Science.
+
+**Q: How do I declare a computer science major?**  
+A: Students can declare a CS major by submitting a major declaration form through SIS and selecting a faculty advisor from the CS department.
+
+**Q: Who can I contact for academic advising?**  
+A: You can reach out to your assigned faculty advisor or the CS department’s advising team. Undergraduate students can consult the department’s advising coordinator, and graduate students can contact their program director.
+
+---
+
+### **Course Requirements & Registration**
+
+**Q: What are the core computer science courses required for the major?**  
+A: Core courses include:
+- CS 15: Introduction to Computer Science  
+- CS 40: Machine Structure & Assembly Language Programming  
+- CS 80 or CS 105: Programming Languages  
+- CS 160: Algorithms  
+- CS 170: Computation Theory  
+- Additional elective and systems courses are also required.
+
+**Q: What prerequisites do I need for upper-level CS courses?**  
+A: Most upper-level courses require CS 15 (Data Structures) and CS 40 (Machine Structure). More advanced courses may require CS 160 (Algorithms) and CS 170 (Computation Theory).
+
+**Q: Can I take a CS course pass/fail?**  
+A: No, all major-required courses must be taken for a letter grade. Pass/fail courses do not count toward major requirements.
+
+**Q: How do I get permission for a full CS class?**  
+A: If a class is full, you can join the waitlist on SIS or request instructor consent via email. Some high-demand courses have a petition process for enrollment.
+
+**Q: How do I take an independent study or research course?**  
+A: Students interested in research should reach out to a faculty member with their proposal. Once approved, they can register for CS 93 (Directed Study) or CS 191 (Research).
+
+---
+
+### **Graduate Programs**
+
+**Q: What graduate programs does Tufts CS offer?**  
+A: Tufts offers MS and PhD degrees in Computer Science, as well as specialized programs in Human-Robot Interaction, Data Science, and Cybersecurity & Public Policy.
+
+**Q: What are the requirements for the MS in Computer Science?**  
+A: The MS program requires 30 SHUs (Semester Hour Units) at the 100-level or above, with options for thesis and coursework tracks.
+
+**Q: What is the PhD program structure?**  
+A: PhD students conduct original research, complete coursework, pass qualifying exams, and defend a dissertation.
+
+**Q: Can I apply for a BS/MS program in CS?**  
+A: Yes, Tufts offers a Fifth-Year BS/MS program, allowing students to complete both degrees in an accelerated format.
+
+---
+
+### **Internships, Research, and Career Support**
+
+**Q: How can I find research opportunities in the CS department?**  
+A: Students can explore faculty research areas on the department website and directly contact faculty members for potential research assistant positions.
+
+**Q: Does Tufts offer internship support for CS students?**  
+A: Yes, the Career Center provides internship postings, resume reviews, and career fairs tailored for CS students.
+
+**Q: What companies recruit Tufts CS graduates?**  
+A: Tufts CS graduates work at top tech companies including Google, Microsoft, Amazon, and startups, as well as in research and academia.
+
+---
+
+### **Miscellaneous**
+
+**Q: How do I become a Teaching Assistant (TA) for a CS course?**  
+A: CS students can apply for TA positions each semester. Applications are typically open near the end of the previous semester.
+
+**Q: Where can I find department policies and documentation?**  
+A: Department policies, forms, and academic guidelines are available on the [Tufts CS Department website](https://engineering.tufts.edu/cs/current-students/policies-and-documentation).
+
+**Q: How do I get involved in CS clubs and student organizations?**  
+A: Tufts has various CS-related organizations, including Women in Tech, Tufts CS Exchange, and hackathon groups. Check with the student activities office for more details.
+
+For further inquiries, contact the Tufts Computer Science Department at **cs@tufts.edu** or visit the department office.
+

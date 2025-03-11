@@ -148,7 +148,8 @@ def text_upload(
     text: str,    
     strategy: str | None = None,
     description: str | None = None,
-    session_id: str | None = None
+    session_id: str | None = None,
+    local: bool = False
     ):
     
     params = {
@@ -164,5 +165,5 @@ def text_upload(
     }
 
 
-    response = upload(multipart_form_data)
+    response = upload(multipart_form_data, local)
     return response
