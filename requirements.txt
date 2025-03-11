@@ -9,3 +9,4 @@ Werkzeug==2.2.2
 bs4==0.0.1
 Flask-Mail==0.9.1
 beautifulsoup4==4.13.3
+selenium==4.29.0

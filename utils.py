@@ -5,6 +5,8 @@ import re
 import ast
 import json
 from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 GOOGLE_API_KEY = os.getenv("googleSearch")
 SEARCH_ENGINE_ID = os.getenv("googleCSEId")
@@ -82,12 +84,6 @@ def advisor(query: str, user: str, bot: bool):
         web_context = google_search(parsed_query)
         print(f"web context: {web_context}")
         store_context(web_context)
-        # context = retrieve(
-        #     query=query,
-        #         session_id=RAG_CONTEXT_SESSION,
-        #         rag_threshold= 0.7,
-        #         rag_k=3
-        # )
         query = f"Query:\n{query}. Information from web: \n{web_context}"
     else:
         if not bot:
@@ -356,23 +352,29 @@ def parse_query(query: str) -> str:
     )
     return response['response']
 
-
-def fetch_full_content(url: str, timeout: int = 10) -> str:
+def fetch_full_content(url: str, timeout:int = 10) -> str:
     try:
-        response = requests.get(url, timeout=timeout)
-        response.raise_for_status()
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        driver = webdriver.Chrome(options=chrome_options)
+        driver.get("https://engineering.tufts.edu/cs/people/faculty/fahad-dogar")
+        html = driver.page_source
+        driver.quit()
     except Exception as e:
         print(f"Error fetching {url}: {e}")
         return ""
+    
+    soup = BeautifulSoup(html, "html.parser")
 
-    soup = BeautifulSoup(response.text, 'html.parser')
+    # Extract main content (remove scripts, styles, ads)
+    for unwanted in soup(["script", "style", "header", "footer", "nav", "aside"]):
+        unwanted.extract()  # Remove these elements
 
-    # Find the main content div, articles, or sections
-    content = soup.find('article') or soup.find('main') or soup.find('body')
-    return content.get_text(strip=True) if content else soup.get_text(strip=True)
+    text = soup.get_text(separator=" ", strip=True) # Extract clean text
+    clean_text = " ".join(text.split()) # [x: ] to include first x words only
+    return clean_text
 
-def google_search(query: str, num_results: int = 3) -> str:
-
+def google_search(query: str, num_results: int = 2) -> str:
     search_url = "https://www.googleapis.com/customsearch/v1"
     params = {
         "key": GOOGLE_API_KEY, 
@@ -384,53 +386,86 @@ def google_search(query: str, num_results: int = 3) -> str:
         response = requests.get(search_url, params=params, timeout=10)
         response.raise_for_status()
         results = response.json().get("items", [])
-        
+
         if not results:
             return "No relevant information found on web!"
-        print(f"Length results: {len(results)}")
-        summaries = []
+        web_info = []
         for item in results:
             url = item['link']
-            content = fetch_full_content(url)
-            summary = generate(
-                model='4o-mini',
-                system="""
-                You are an AI assistant summarizing the relevant information from a website. 
-                Your task is to analyze the content and provide a concise summary that 
-                answers the given query.
-
-                - Summarize the key points and main ideas.
-                - Include relevant details and examples.
-                - Ensure the summary is coherent, well-structured has no 
-                unnecessary information.
-                """,
-                query=f"URL: {url}\nContent:\n{content}",
-                temperature=0.1,
-                lastk=1,
-                session_id="website_summary",
-                rag_usage=False
-            ).get("response", "")
-
-            summaries.append(summary)
-
-        return "\n\n".join(summaries)
-
+            text = fetch_full_content(url)
+            web_info.append(text)
+        return "\n\n".join(web_info)
     except requests.exceptions.RequestException as e:
         return f"Error: {e}"
-    
+
+# def google_search(query: str, num_results: int = 3) -> str:
+
+#     search_url = "https://www.googleapis.com/customsearch/v1"
+#     params = {
+#         "key": GOOGLE_API_KEY, 
+#         "cx": SEARCH_ENGINE_ID, 
+#         "q": query.replace('"', ''), 
+#         "num": num_results
+#     }
+#     try:
+#         response = requests.get(search_url, params=params, timeout=10)
+#         response.raise_for_status()
+#         results = response.json().get("items", [])
+        
+#         if not results:
+#             return "No relevant information found on web!"
+#         summaries = []
+#         for item in results:
+#             url = item['link']
+#             content = fetch_full_content(url)
+#             summary = generate(
+#                 model='4o-mini',
+#                 system="""
+#                 You are an AI assistant summarizing the relevant information from a website. 
+#                 Your task is to analyze the content and provide a concise summary that 
+#                 answers the given query.
+
+#                 - Summarize the key points and main ideas.
+#                 - Include relevant details and examples.
+#                 - Ensure the summary is coherent, well-structured has no 
+#                 unnecessary information.
+#                 """,
+#                 query=f"URL: {url}\nContent:\n{content}",
+#                 temperature=0.1,
+#                 lastk=1,
+#                 session_id="website_summary",
+#                 rag_usage=False
+#             ).get("response", "")
+
+#             summaries.append(summary)
+
+#         return "\n\n".join(summaries)
+
+#     except requests.exceptions.RequestException as e:
+#         return f"Error: {e}" 
 
 def store_context(context: str) -> None:
     """Evaluates and stores meaningful information into RAG for future use."""
     response = generate(
         model='4o-mini',
         system="""
-        You are an AI assistant managing a knowledge base for Tufts CS students. 
-        Given new information, determine whether it is valuable for future reference. 
+        You are an AI assistant managing a knowledge base for Tufts CS students. Your role is twofold:
 
-        - If the information is relevant to academic advising, courses, research, 
-          careers, or university policies, summarize it concisely.  
-        - If the information is too general, redundant, or not useful for RAG, return "$DISCARD$".
-        - If storing, ensure the summary is structured and retains key details.
+        1. Relevance Determination:
+
+        - Analyze the provided information and decide whether it is valuable 
+        for future reference.
+        - Consider the following topics as high-priority: academic advising, courses, 
+        research, careers, and university policies.
+
+        2. Summarization or Discarding:
+
+        - If the information is relevant:
+            - Generate a concise and structured summary that preserves key details and insights.
+        - If the information is too general, redundant, or not useful for our knowledge base:
+            - Strictly respond only with: $DISCARD$
+        Your response should contain either the structured summary (if relevant) 
+        or the exact text $DISCARD$ (if not). Do not include any additional commentary or explanation.
         """,
         query=f"Evaluate and summarize the following information for storage:\n\n{context}",
         temperature=0.0,
