@@ -64,8 +64,6 @@ def initialize():
 def hello_world():
    return jsonify({"text":'Hello from Koyeb - you reached the main page!'})
 
-
-
 @app.route('/query', methods=['POST'])
 def main():
     data = request.get_json() 
@@ -85,8 +83,30 @@ def main():
         store_context(response)
         
         return jsonify({"text": f"Answer sent to {user} ✅"})
+    
     else: 
+        
         response = generate_response(message, user)
+
+         # Check if the message is a greeting
+        if "$TRUE$" in response:
+            return jsonify({
+                "text": "Hello! Need information? Click below to visit the Tufts Admissions FAQ:",
+                "attachments": [
+                    {
+                        "title": "Open FAQs",
+                        "title_link": "https://admissions.tufts.edu/apply/applying-as-an-international-s/faqs/",
+                        "actions": [
+                            {
+                                "type": "button",
+                                "text": "Open FAQs",
+                                "url": "https://admissions.tufts.edu/apply/applying-as-an-international-s/faqs/"
+                            }
+                        ]
+                    }
+                ]
+            })
+        
 
     return jsonify({"text": response})
     
