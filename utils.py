@@ -522,7 +522,7 @@ def get_random_cs_questions():
         "What career paths do Tufts CS graduates pursue?",
         "How can I get involved in hackathons or coding competitions?",
         "How do I get involved with faculty-led research projects?",
-        "Who is Professor Fahad Dogar.",
+        "Who is Professor Fahad Dogar?",
     ]
     
     return random.sample(cs_faq_questions, 4)
