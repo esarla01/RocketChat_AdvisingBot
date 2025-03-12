@@ -145,4 +145,5 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     initialize()
+    print("\n\n\n\nHELLO WORLD\n\n\n\n")
     app.run()

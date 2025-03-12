@@ -453,6 +453,8 @@ def google_search(query: str, num_results: int = 10) -> str:
             return "No relevant information found on web!"
 
         results = format_results_for_llm(results)
+
+        print(f"[DEBUGGING] Formated urls from google: {results}")
     
         system=f"""
                 You will be given urls and summaries. Your job is to use this
