@@ -88,8 +88,10 @@ def main():
         
         response = generate_response(message, user)
 
-         # Check if the message is a greeting
+        print(f"This is the response: {response}")
+        # Check if the message is a greeting
         if "$FAQS$" in response:
+            print("HERE!")
             return jsonify({
                 "text": "Hello! Need information? Click below to visit the Tufts Admissions FAQ:",
                 "attachments": [
