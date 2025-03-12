@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import random
+import time
 
 
 GOOGLE_API_KEY = os.getenv("googleSearch")
@@ -293,6 +294,7 @@ def generate_response(query: str, user: str, bot: str):
         else:
             print("Error: Incorrect number of parameters for send_message.")
             return "Error: Incorrect function parameters."
+    time.sleep(0.5)
     return response
 
 
