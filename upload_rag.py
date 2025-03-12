@@ -2,7 +2,7 @@ from utils import RAG_CONTEXT_SESSION
 from llmproxy import pdf_upload, text_upload
 import os
 
-def main(rag_context_directory: str):
+def main_txt(rag_context_directory: str):
     """Function to upload RAG context from text files"""
     for filename in os.listdir(rag_context_directory):
         if filename.lower().endswith('.txt'):
@@ -18,15 +18,16 @@ def main(rag_context_directory: str):
             )
             print(f"Response: {response}")
 
-# def main(rag_context_directory: str):
-#     """Function to upload rag context"""
-#     for filename in os.listdir(rag_context_directory):
-#         if filename.lower().endswith('.pdf'):
-#             file_path = os.path.join(rag_context_directory, filename)
-#             print(f"Uploading file: {file_path}")
-#             response = pdf_upload(file_path, strategy='smart', session_id=RAG_CONTEXT_SESSION, local=True)
-#             print(f"Response: {response}")
+def main_pdf(rag_context_directory: str):
+    """Function to upload rag context"""
+    for filename in os.listdir(rag_context_directory):
+        if filename.lower().endswith('.pdf'):
+            file_path = os.path.join(rag_context_directory, filename)
+            print(f"Uploading file: {file_path}")
+            response = pdf_upload(file_path, strategy='smart', session_id=RAG_CONTEXT_SESSION, local=True)
+            print(f"Response: {response}")
 
 
 if __name__ == "__main__":
-    main("RagContext")
+    main_txt("RagContext")
+    main_pdf("RagContext")
