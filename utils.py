@@ -15,7 +15,7 @@ SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 # Session variables:
 
-RAG_CONTEXT_SESSION = "RagSessionTest_7"
+RAG_CONTEXT_SESSION = "RagSessionTest_8"
 ADVISOR_SESSION = "mini-project"
 
 def extract_tool(text):
@@ -426,9 +426,6 @@ def google_search(query: str, num_results: int = 5) -> str:
             {"link": item["link"], "summary": item.get("snippet", "No summary available")}
             for item in data.get("items", [])
         ]
-        for item in data.get("items", []):
-            print(f"\n\nDEBUGGING: {item["link"]}\n\n")
-
         if not results:
             return "No relevant information found on web!"
 
