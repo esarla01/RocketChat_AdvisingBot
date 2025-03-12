@@ -20,7 +20,7 @@ The Computer Science programs offered in both the School of Arts and Sciences an
   - **Core CS Courses:**
     - CS 15: Introduction to Computer Science
     - CS 40: Machine Structure & Assembly Language Programming
-    - CS 80 or CS 105: Programming Languages
+    - CS 105: Programming Languages
     - CS 160: Algorithms
     - CS 170: Computation Theory
   - **Electives:**

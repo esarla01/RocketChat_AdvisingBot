@@ -51,7 +51,7 @@
 - **CS 11** - Introduction to Computer Science (4 SHU)
 - **CS 15** - Data Structures (4 SHU)
 - **CS 40** - Machine Structure & Assembly Language Programming (5 SHU)
-- **CS 105 or CS 80** - Programming Languages (3-5 SHU)
+- **CS 105** - Programming Languages (3-5 SHU)
 - **CS 160** - Algorithms (4 SHU)
 - **CS 170** - Computation Theory (3 SHU)
 - **Systems Electives** - Two courses (≥3 SHU each)

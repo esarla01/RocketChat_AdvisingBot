@@ -7,6 +7,8 @@ import json
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import random
+
 
 GOOGLE_API_KEY = os.getenv("googleSearch")
 SEARCH_ENGINE_ID = os.getenv("googleCSEId")
@@ -490,3 +492,33 @@ def store_context(context: str) -> None:
     if summary != "$DISCARD$":
         print(f"\n\nStoring in RAG: {summary}\n\n")
         text_upload(text=summary, session_id=RAG_CONTEXT_SESSION, strategy='fixed')
+
+def get_random_cs_questions():
+    cs_faq_questions = [
+        "How do I become a CS Teaching Assistant (TA)?",
+        "How do I register for an independent study or research course?",
+        "How do I change my CS advisor?",
+        "What are the CS major GPA requirements?",
+        "How do I transfer CS credits from another school?",
+        "What programming languages are taught in Tufts CS courses?",
+        "What electives are available for CS majors?",
+        "What are the differences between the BA and BS in CS?",
+        "Where can I find department policies and forms?",
+        "What CS clubs and student organizations are available?",
+        "Which companies recruit Tufts CS graduates?",
+        "Does Tufts offer CS internship support?",
+        "Can I double major with CS?",
+        "What CS courses count toward the Data Science major?",
+        "Are there study abroad programs for CS students?",
+        "What math courses are required for a CS major?",
+        "Can I take CS courses at another university?",
+        "How do I get approval for a CS course substitution?",
+        "Where can I find tutoring or help sessions for CS courses?",
+        "How do I access CS department computing resources?",
+        "Does Tufts CS offer funding for undergraduate research?",
+        "What career paths do Tufts CS graduates pursue?",
+        "How can I get involved in hackathons or coding competitions?",
+        "How do I get involved with faculty-led research projects?"
+    ]
+    
+    return random.sample(cs_faq_questions, 4)
