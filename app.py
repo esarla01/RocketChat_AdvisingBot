@@ -89,7 +89,7 @@ def main():
         response = generate_response(message, user)
 
          # Check if the message is a greeting
-        if "$TRUE$" in response:
+        if "$FAQS$" in response:
             return jsonify({
                 "text": "Hello! Need information? Click below to visit the Tufts Admissions FAQ:",
                 "attachments": [
