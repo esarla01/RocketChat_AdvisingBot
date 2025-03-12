@@ -1,10 +1,11 @@
 import time
 import requests
 from flask import Flask, request, jsonify
-from llmproxy import generate, pdf_upload
+from llmproxy import generate, pdf_upload, text_upload
 from utils import generate_response, store_context
 import os
 import hashlib
+from utils import RAG_CONTEXT_SESSION
 
 app = Flask(__name__)
 
@@ -34,30 +35,22 @@ def send_advisor_message(username, text):
         print(f"Failed to send message: {response.json()}")
 
 
-# @app.before_first_request
+RAG_CONTEXT_DIRECTORY = "RagContext"
+@app.before_first_request
 def initialize():
     """Uploads shared documents to a small set of predefined RAG SIDs."""
-    try:
-        pdf_upload(
-            path='undergrad-course-descriptions.pdf',
-            session_id='RagSession',
-            strategy='smart'
-        )
-        pdf_upload(
-            path='sl-bscs-degree-sheet-2028.pdf',
-            session_id='RagSession',
-            strategy='smart'
-        )
-        pdf_upload(
-            path='major-structures.pdf',
-            session_id='RagSession',
-            strategy='smart'
-        )
- 
-    except Exception as e:
-        print(f"Error during initialization: {e}")
-
-    print("Initialization complete with shared RAG sessions!")
+    for filename in os.listdir(RAG_CONTEXT_DIRECTORY):
+        if filename.lower().endswith('.txt'):
+            file_path = os.path.join(RAG_CONTEXT_DIRECTORY, filename)
+            print(f"Uploading file: {file_path}")
+            with open(file_path, "r", encoding="utf-8") as file:
+                text_content = file.read()
+            response = text_upload(
+                text=text_content,
+                strategy='fixed',
+                session_id=RAG_CONTEXT_SESSION,
+            )
+            print(response)
 
 
 @app.route('/', methods=['POST'])

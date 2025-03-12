@@ -15,7 +15,7 @@ SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 # Session variables:
 
-RAG_CONTEXT_SESSION = "RagSessionTest_5"
+RAG_CONTEXT_SESSION = "RagSessionTest_6"
 ADVISOR_SESSION = "mini-project"
 
 def extract_tool(text):
@@ -420,6 +420,13 @@ def fetch_full_content(url: str, timeout: int = 10) -> str:
     text = soup.get_text(separator=" ", strip=True)
     clean_text = " ".join(text.split())
     return clean_text
+
+def format_results_for_llm(results):
+    """Format a list of dictionaries into a string for LLM input"""
+    formatted_results = "\n\n".join(
+        [f"Link: {item['link']}\nSummary: {item['summary']}" for item in results]
+    )
+    return formatted_results
 
 def google_search(query: str, num_results: int = 5) -> str:
     search_url = "https://www.googleapis.com/customsearch/v1"
