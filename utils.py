@@ -119,7 +119,8 @@ def advisor(query: str, user: str, bot: bool):
 
         IF the student sends you a greeting message (e.g., hello) or a casual conversation that 
         has nothing to do with the CS department, you should strictly reply just with 
-        $TRUE$ in your response. 
+        include $FAQS$ at the end of your response, so that another agent can add 
+        some FAQs for the user. 
 
         If a student asks about something outside your scope or needs further assistance, 
         you will either ask clarifying questions or escalate the query to a human 
@@ -268,8 +269,6 @@ def generate_response(query: str, user: str, bot=False):
     # Extract tool name and parameters
     tool_name, params = extract_tool(response)
 
-    print("Generated response after extract_tool:", response)
-
     if tool_name == "send_message":
         print("Entered here!")
         param_list = parse_params(params)  # Use safer parsing
@@ -284,7 +283,6 @@ def generate_response(query: str, user: str, bot=False):
         else:
             print("Error: Incorrect number of parameters for send_message.")
             return "Error: Incorrect function parameters."
-    print(f"Generated response before returning: {response}")
     return response
 
 
