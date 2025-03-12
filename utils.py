@@ -368,28 +368,6 @@ def parse_query(user:str, query: str) -> str:
     )
     return response['response']
 
-# def fetch_full_content(url: str, timeout:int = 10) -> str:
-#     try:
-#         chrome_options = Options()
-#         chrome_options.add_argument("--headless")
-#         driver = webdriver.Chrome(options=chrome_options)
-#         driver.get("https://engineering.tufts.edu/cs/people/faculty/fahad-dogar")
-#         html = driver.page_source
-#         driver.quit()
-#     except Exception as e:
-#         print(f"Error fetching {url}: {e}")
-#         return ""
-    
-#     soup = BeautifulSoup(html, "html.parser")
-
-#     # Extract main content (remove scripts, styles, ads)
-#     for unwanted in soup(["script", "style", "header", "footer", "nav", "aside"]):
-#         unwanted.extract()  # Remove these elements
-
-#     text = soup.get_text(separator=" ", strip=True) # Extract clean text
-#     clean_text = " ".join(text.split()) # [x: ] to include first x words only
-#     return clean_text
-
 def fetch_full_content(url: str, timeout: int = 10) -> str:
     html = ""
     # try:
