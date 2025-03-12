@@ -442,15 +442,15 @@ def google_search(query: str, num_results: int = 10) -> str:
         print(f"Response: {response}")
         response.raise_for_status()
         data = response.json()
-
-        if not results:
-            return "No relevant information found on web!"
-        
+    
         # Extract URLs and summaries (snippets) from search result items
         results = [
             {"link": item["link"], "summary": item.get("snippet", "No summary available")}
             for item in data.get("items", [])
         ]
+
+        if not results:
+            return "No relevant information found on web!"
 
         results = format_results_for_llm(results)
     
@@ -460,8 +460,6 @@ def google_search(query: str, num_results: int = 10) -> str:
                 information to answer a query that will also be given to you.
                 Once you identified the url, strictly, just respond with the url
                 and nothing else.
-
-                If no links are provided, just respond with $NO URLS$
                 """
         response = generate(
             model='4o-mini',
@@ -472,8 +470,6 @@ def google_search(query: str, num_results: int = 10) -> str:
             session_id="GenericSessionId",
             rag_usage=False
         )
-        if "$NO URLS$" in response:
-            return ""
         print(f"[Debugging] This is the url: {response['response']}")
         
         web_content = fetch_full_content(response['response'])

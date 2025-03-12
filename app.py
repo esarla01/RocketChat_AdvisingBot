@@ -36,10 +36,11 @@ def send_advisor_message(username, text):
 
 
 RAG_CONTEXT_DIRECTORY = "RagContext"
-@app.before_first_request
+
 def initialize():
     """Uploads shared documents to a small set of predefined RAG SIDs."""
     for filename in os.listdir(RAG_CONTEXT_DIRECTORY):
+        print(filename)
         if filename.lower().endswith('.txt'):
             file_path = os.path.join(RAG_CONTEXT_DIRECTORY, filename)
             print(f"Uploading file: {file_path}")
@@ -114,13 +115,24 @@ def main():
                         "actions": [
                             {
                                 "type": "button",
-                                "text": "What are the core computer science courses required for the major?",
-                                "msg": "What are the core computer science courses required for the major?",
+                                "text": "What are the core CS courses?",
+                                "msg": "What are the core CS courses?",
                                 "msg_in_chat_window": True,
                                 "msg_processing_type": "sendMessage"
                             },
                         ] 
-                    }
+                    },
+                    {
+                        "actions": [
+                            {
+                                "type": "button",
+                                "text": "How can I find CS research opportunities?",
+                                "msg": "How can I find CS research opportunities?",
+                                "msg_in_chat_window": True,
+                                "msg_processing_type": "sendMessage"
+                            },
+                        ] 
+                    },
                 ]
             })
         
@@ -132,5 +144,5 @@ def page_not_found(e):
     return "Not Found", 404
 
 if __name__ == "__main__":
-    
+    initialize()
     app.run()
