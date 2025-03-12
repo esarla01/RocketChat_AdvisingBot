@@ -428,7 +428,7 @@ def format_results_for_llm(results):
     )
     return formatted_results
 
-def google_search(query: str, num_results: int = 10) -> str:
+def google_search(query: str, num_results: int = 5) -> str:
     search_url = "https://www.googleapis.com/customsearch/v1"
     print(f"Perfoming google search with: {search_url}")
     params = {
@@ -448,13 +448,13 @@ def google_search(query: str, num_results: int = 10) -> str:
             {"link": item["link"], "summary": item.get("snippet", "No summary available")}
             for item in data.get("items", [])
         ]
+        for item in data.get("items", []):
+            print(f"\n\nDEBUGGING: {item["link"]}\n\n")
 
         if not results:
             return "No relevant information found on web!"
 
         results = format_results_for_llm(results)
-
-        print(f"[DEBUGGING] Formated urls from google: {results}")
     
         system=f"""
                 You will be given urls and summaries. Your job is to use this
