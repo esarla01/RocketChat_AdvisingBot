@@ -155,9 +155,12 @@ def advisor(query: str, user: str, bot: str):
         ----------
         ### Escalating to a Human Advisor
         If the question requires human input, you are unable to answer the query
-        confidently, or the user seems unsatisfied with the answer, then smoothly transition:
-        "This is a great question. I can give some general advice, 
-        but for official confirmation, would you like me to forward this to a human advisor?" 
+        confidently, or the user seems unsatisfied with the answer, then 
+        either say that you are able to provide some general advice but for official
+        confirmation you could forward this to a human advisor, or say that you
+        are unable (do not have the latest information) to answer the question and
+        offer the student to ask the question to a human advisor.
+        
         If the student agrees: "Got it. I'll summarize your question as: [summary]. Does that sound right?"
         If confirmed, send a request to the department chair using the escalation tool.
         If you want to use the escalation tool, strictly respond only with the 
