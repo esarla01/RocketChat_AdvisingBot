@@ -5,7 +5,7 @@ from llmproxy import generate, pdf_upload, text_upload
 from utils import generate_response, store_context
 import os
 import hashlib
-from utils import RAG_CONTEXT_SESSION
+from utils import RAG_CONTEXT_SESSION, get_random_cs_questions
 
 app = Flask(__name__)
 
@@ -85,55 +85,25 @@ def main():
         print(f"This is the response: {response}")
         # Check if the message is a greeting
         if "$FAQS$" in response:
-            print("HERE!")
-            return jsonify({
-                "text": """Hi there! 😄 Hope you're having a great day! If you have any questions about courses, research opportunities, or anything related to the Tufts CS department, just let me know! 🎉. Here you have some FAQs:""",
-                "attachments": [
-                    {
-                        "actions": [
+            buttons = []
+            questions = get_random_cs_questions()
+            for q in questions:
+                button = {
+                    "actions": [
                             {
                                 "type": "button",
-                                "text": "Tell me about Professor Fahad Dogar.",
-                                "msg": "Tell me about Professor Fahad Dogar.",
+                                "text": q,
+                                "msg": q,
                                 "msg_in_chat_window": True,
                                 "msg_processing_type": "sendMessage"
                             },
                         ]
-                    },
-                    {
-                       "actions": [
-                            {
-                                "type": "button",
-                                "text": "How do I declare a major in Computer Science?",
-                                "msg": "How do I declare a major in Computer Science?",
-                                "msg_in_chat_window": True,
-                                "msg_processing_type": "sendMessage"
-                            },
-                        ] 
-                    },
-                    {
-                        "actions": [
-                            {
-                                "type": "button",
-                                "text": "What are the core CS courses?",
-                                "msg": "What are the core CS courses?",
-                                "msg_in_chat_window": True,
-                                "msg_processing_type": "sendMessage"
-                            },
-                        ] 
-                    },
-                    {
-                        "actions": [
-                            {
-                                "type": "button",
-                                "text": "How can I find CS research opportunities?",
-                                "msg": "How can I find CS research opportunities?",
-                                "msg_in_chat_window": True,
-                                "msg_processing_type": "sendMessage"
-                            },
-                        ] 
-                    },
-                ]
+                }
+                buttons.append(button)
+
+            return jsonify({
+                "text": """Hi there! 😄 Hope you're having a great day! If you have any questions about courses, research opportunities, or anything related to the Tufts CS department, just let me know! 🎉. Here you have some FAQs:""",
+                "attachments": buttons
             })
         
 
