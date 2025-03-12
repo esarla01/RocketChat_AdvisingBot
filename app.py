@@ -93,16 +93,36 @@ def main():
         if "$FAQS$" in response:
             print("HERE!")
             return jsonify({
-                "text": "Hello! Need information? Click below to visit the Tufts Admissions FAQ:",
+                "text": """Hi there! 😄 Hope you're having a great day! If you
+                    have any questions about courses, research opportunities,
+                    or anything related to the Tufts CS department, just let me know!""",
                 "attachments": [
+                    # {
+                    #     "title": "Open FAQs",
+                    #     "title_link": "https://admissions.tufts.edu/apply/applying-as-an-international-s/faqs/",
+                    #     "actions": [
+                    #         {
+                    #             "type": "button",
+                    #             "text": "Open FAQs",
+                    #             "url": "https://admissions.tufts.edu/apply/applying-as-an-international-s/faqs/"
+                    #         }
+                    #     ]
+                    # }
                     {
-                        "title": "Open FAQs",
-                        "title_link": "https://admissions.tufts.edu/apply/applying-as-an-international-s/faqs/",
                         "actions": [
                             {
                                 "type": "button",
-                                "text": "Open FAQs",
-                                "url": "https://admissions.tufts.edu/apply/applying-as-an-international-s/faqs/"
+                                "text": "Tell me about Fahad Dogar",
+                                "msg": "Tell me about Fahad Dogar",
+                                "msg_in_chat_window": True,
+                                "msg_processing_type": "sendMessage"
+                            },
+                            {
+                                "type": "button",
+                                "text": "What courses do I need to graduate with CS major?",
+                                "msg": "What courses do I need to graduate with CS major?",
+                                "msg_in_chat_window": True,
+                                "msg_processing_type": "sendMessage"
                             }
                         ]
                     }
