@@ -176,7 +176,7 @@ def advisor(query: str, user: str, bot: str):
         Question: <student's question>
         Background: <context to help the advisor>
         Example usage:
-        send_message(f"Student: {user}", "Question: What are the prerequisites for COMP 160?", "Background: Jane is a sophomore considering taking the course next semester.")
+        send_message("Student: {user}", "Question: What are the prerequisites for COMP 160?", "Background: Jane is a sophomore considering taking the course next semester.")
         ----------
         Final Guidelines
         Encourage students and make them feel supported and excited about their journey at Tufts 🎉
