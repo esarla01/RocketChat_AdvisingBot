@@ -70,7 +70,7 @@ def main():
     if bot == "HumanAdvisor":
         student = data.get("student user_name", "Unknown")
 
-        response = generate_response(message, student, True)
+        response = generate_response(message, student, bot)
 
         send_advisor_message(student, response)
 
@@ -80,7 +80,7 @@ def main():
     
     else: 
         
-        response = generate_response(message, user)
+        response = generate_response(message, user, bot)
 
         print(f"This is the response: {response}")
         # Check if the message is a greeting

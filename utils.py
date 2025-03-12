@@ -64,7 +64,7 @@ def parse_params(params):
 
     return []
 
-def advisor(query: str, user: str, bot: bool):
+def advisor(query: str, user: str, bot: str):
 
     rag_context = "No relevant rag context!"
     try:
@@ -251,7 +251,7 @@ def send_message(student: str, question: str, background: str):
     except Exception as e:
         return f"Error occurred while sending the message: {e}"
     
-def generate_response(query: str, user: str, bot=False):
+def generate_response(query: str, user: str, bot: str):
     print("Received query:", query)
     print("User:", user)
     """
