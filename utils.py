@@ -15,7 +15,7 @@ SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 # Session variables:
 
-RAG_CONTEXT_SESSION = "RagSessionTest_6"
+RAG_CONTEXT_SESSION = "RagSessionTest_7"
 ADVISOR_SESSION = "mini-project"
 
 def extract_tool(text):
@@ -428,7 +428,7 @@ def format_results_for_llm(results):
     )
     return formatted_results
 
-def google_search(query: str, num_results: int = 5) -> str:
+def google_search(query: str, num_results: int = 10) -> str:
     search_url = "https://www.googleapis.com/customsearch/v1"
     print(f"Perfoming google search with: {search_url}")
     params = {
@@ -441,21 +441,43 @@ def google_search(query: str, num_results: int = 5) -> str:
         response = requests.get(search_url, params=params, timeout=30)
         print(f"Response: {response}")
         response.raise_for_status()
-        results = response.json().get("items", [])
+        data = response.json()
 
         if not results:
             return "No relevant information found on web!"
-        web_info = []
-        # Debugging info
-        for item in results:
-            print(f"Link found: {item['link']}\n")
-        for item in [results[0]]:
-            url = item['link']
-            print(f"Url: {url}")
-            text = fetch_full_content(url)
-            print(f"web info: {text}")
-            web_info.append(text)
-        return "\n\n".join(web_info)
+        
+        # Extract URLs and summaries (snippets) from search result items
+        results = [
+            {"link": item["link"], "summary": item.get("snippet", "No summary available")}
+            for item in data.get("items", [])
+        ]
+
+        results = format_results_for_llm(results)
+    
+        system=f"""
+                You will be given urls and summaries. Your job is to use this
+                information to pick the url which you think has the most useful
+                information to answer a query that will also be given to you.
+                Once you identified the url, strictly, just respond with the url
+                and nothing else.
+
+                If no links are provided, just respond with $NO URLS$
+                """
+        response = generate(
+            model='4o-mini',
+            system=system,
+            query=f"query:{query}urls:{results}",
+            temperature=0.1,
+            lastk=1,
+            session_id="GenericSessionId",
+            rag_usage=False
+        )
+        if "$NO URLS$" in response:
+            return ""
+        print(f"[Debugging] This is the url: {response['response']}")
+        
+        web_content = fetch_full_content(response['response'])
+        return web_content
     except requests.exceptions.RequestException as e:
         return f"Error: {e}"
 
