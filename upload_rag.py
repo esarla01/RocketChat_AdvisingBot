@@ -12,7 +12,7 @@ def main(rag_context_directory: str):
                 text_content = file.read()
             response = text_upload(
                 text=text_content,
-                strategy='smart',
+                strategy='fixed',
                 session_id=RAG_CONTEXT_SESSION,
                 local=True
             )

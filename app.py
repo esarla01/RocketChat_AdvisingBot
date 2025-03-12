@@ -93,38 +93,40 @@ def main():
         if "$FAQS$" in response:
             print("HERE!")
             return jsonify({
-                "text": """Hi there! 😄 Hope you're having a great day! If you
-                    have any questions about courses, research opportunities,
-                    or anything related to the Tufts CS department, just let me know!""",
+                "text": """Hi there! 😄 Hope you're having a great day! If you have any questions about courses, research opportunities, or anything related to the Tufts CS department, just let me know! 🎉. Here you have some FAQs:""",
                 "attachments": [
-                    # {
-                    #     "title": "Open FAQs",
-                    #     "title_link": "https://admissions.tufts.edu/apply/applying-as-an-international-s/faqs/",
-                    #     "actions": [
-                    #         {
-                    #             "type": "button",
-                    #             "text": "Open FAQs",
-                    #             "url": "https://admissions.tufts.edu/apply/applying-as-an-international-s/faqs/"
-                    #         }
-                    #     ]
-                    # }
                     {
                         "actions": [
                             {
                                 "type": "button",
-                                "text": "Tell me about Fahad Dogar",
-                                "msg": "Tell me about Fahad Dogar",
+                                "text": "Tell me about Professor Fahad Dogar.",
+                                "msg": "Tell me about Professor Fahad Dogar.",
                                 "msg_in_chat_window": True,
                                 "msg_processing_type": "sendMessage"
                             },
+                        ]
+                    },
+                    {
+                       "actions": [
                             {
                                 "type": "button",
-                                "text": "What courses do I need to graduate with CS major?",
-                                "msg": "What courses do I need to graduate with CS major?",
+                                "text": "How do I declare a major in Computer Science?",
+                                "msg": "How do I declare a major in Computer Science?",
                                 "msg_in_chat_window": True,
                                 "msg_processing_type": "sendMessage"
-                            }
-                        ]
+                            },
+                        ] 
+                    },
+                    {
+                        "actions": [
+                            {
+                                "type": "button",
+                                "text": "What are the core computer science courses required for the major?",
+                                "msg": "What are the core computer science courses required for the major?",
+                                "msg_in_chat_window": True,
+                                "msg_processing_type": "sendMessage"
+                            },
+                        ] 
                     }
                 ]
             })

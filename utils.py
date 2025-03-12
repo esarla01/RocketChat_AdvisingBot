@@ -15,7 +15,7 @@ SEARCH_ENGINE_ID = os.getenv("googleCSEId")
 
 # Session variables:
 
-RAG_CONTEXT_SESSION = "RagSessionTest_4"
+RAG_CONTEXT_SESSION = "RagSessionTest_5"
 ADVISOR_SESSION = "mini-project"
 
 def extract_tool(text):
